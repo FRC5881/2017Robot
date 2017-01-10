@@ -133,7 +133,9 @@
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/wpilib/userLibs/TalonSRXLibJava.jar!/" />
       </CLASSES>
-      <JAVADOC />
+      <JAVADOC>
+        <root url="file://$PROJECT_DIR$/wpilib/userLibs/docs/ctre" />
+      </JAVADOC>
       <SOURCES />
     </library>
     <library name="wpilib">
@@ -143,8 +145,15 @@
         <root url="jar://$PROJECT_DIR$/wpilib/lib/opencv.jar!/" />
         <root url="jar://$PROJECT_DIR$/wpilib/lib/WPILib.jar!/" />
       </CLASSES>
-      <JAVADOC />
-      <SOURCES />
+      <JAVADOC>
+        <root url="file://$PROJECT_DIR$/wpilib/javadoc" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/wpilib/lib/cscore-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/wpilib/lib/NetworkTables-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/wpilib/lib/opencv-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/wpilib/lib/WPILib-sources.jar!/" />
+      </SOURCES>
     </library>
   </component>
   <component name="masterDetails">
