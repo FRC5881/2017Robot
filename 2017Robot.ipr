@@ -129,9 +129,9 @@
     <option name="serverIp" value="localhost" />
   </component>
   <component name="libraryTable">
-    <library name="ant-contrib">
+    <library name="TalonSRXLib">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/wpilib/ant/ant-contrib.jar!/" />
+        <root url="jar://$PROJECT_DIR$/wpilib/userLibs/TalonSRXLibJava.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

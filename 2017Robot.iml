@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="wpilib" level="project" />
-    <orderEntry type="library" name="ant-contrib" level="project" />
+    <orderEntry type="library" name="TalonSRXLib" level="project" />
   </component>
 </module>

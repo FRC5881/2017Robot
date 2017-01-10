@@ -2,10 +2,12 @@
 
 <project name="WPILib Installation" default="install">
 
+    <property file="build.properties"/>
+
     <!-- Set this to the same value that's in build.xml -->
     <property name="wpilib" value="wpilib"/>
 
-    <target name="install" depends="doInstall, isInstalled"/>
+    <target name="install" depends="doInstall, installCtre, isInstalled"/>
 
     <target name="doInstall" depends="wpilib.check" unless="wpilib.exists">
         <mkdir dir="${wpilib}"/>
@@ -23,6 +25,18 @@
         <mkdir dir="${wpilib}/userLibs"/>
     </target>
 
+    <target name="installCtre" depends="wpilib.check" if="wpilib.installCtre">
+        <get src="http://www.ctr-electronics.com/downloads/lib/CTRE_FRCLibs_NON-WINDOWS.zip"
+             dest="${wpilib}/CTRE.zip"/>
+        <unzip src="${wpilib}/CTRE.zip" dest="${wpilib}/userLibs">
+            <patternset>
+                <include name="java/lib/*"/>
+            </patternset>
+            <mapper type="flatten"/>
+        </unzip>
+        <delete file="${wpilib}/CTRE.zip"/>
+    </target>
+
     <target name="isInstalled" depends="wpilib.check" if="wpilib.exists">
         <echo>WPILib is installed</echo>
     </target>
@@ -30,6 +44,12 @@
     <target name="wpilib.check">
         <condition property="wpilib.exists">
             <available file="${wpilib}" type="dir"/>
+        </condition>
+        <condition property="wpilib.installCtre">
+            <and>
+                <isset property="wpilib.exists"/>
+                <istrue value="${userLibInstallCtre}"/>
+            </and>
         </condition>
     </target>
 
