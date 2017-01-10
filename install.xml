@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="WPILib Installation" default="install">
+
+    <!-- Set this to the same value that's in build.xml -->
+    <property name="wpilib" value="wpilib"/>
+
+    <target name="install" depends="doInstall, isInstalled"/>
+
+    <target name="doInstall" depends="wpilib.check" unless="wpilib.exists">
+        <mkdir dir="${wpilib}"/>
+        <get src="http://first.wpi.edu/FRC/roborio/release/eclipse/plugins/edu.wpi.first.wpilib.plugins.java_2017.1.1.jar"
+             dest="${wpilib}/plugin.jar"/>
+        <unzip src="${wpilib}/plugin.jar" dest="${wpilib}">
+            <patternset>
+                <include name="resources/java.zip"/>
+            </patternset>
+            <mapper type="flatten"/>
+        </unzip>
+        <delete file="${wpilib}/plugin.jar" />
+        <unzip src="${wpilib}/java.zip" dest="${wpilib}"/>
+        <delete file="${wpilib}/java.zip" />
+        <mkdir dir="${wpilib}/userLibs"/>
+    </target>
+
+    <target name="isInstalled" depends="wpilib.check" if="wpilib.exists">
+        <echo>WPILib is installed</echo>
+    </target>
+
+    <target name="wpilib.check">
+        <condition property="wpilib.exists">
+            <available file="${wpilib}" type="dir"/>
+        </condition>
+    </target>
+
+</project>
