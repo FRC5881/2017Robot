@@ -1,9 +1,7 @@
-package org.techvalleyhigh.frc5881.steamworks;
+package org.techvalleyhigh.frc5881.steamworks.Util;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
@@ -15,8 +13,10 @@ public class OI {
     public JoystickButton yButton;
     public JoystickButton backButton;
     public JoystickButton startButton;
-    public Joystick ljoystick;
-    public Joystick rjoystick;
+    public Joystick joystickLeft;
+    public Joystick joystickRight;
+    public static int XBOX_LEFT_STICK_Y_AXIS = 2;
+    public static int XBOX_RIGHT_STICK_Y_AXIS = 5;
 
     public OI() {
 
@@ -36,7 +36,6 @@ public class OI {
         yButton = new JoystickButton(xboxController, 4);
         backButton = new JoystickButton(xboxController, 7);
         startButton = new JoystickButton(xboxController, 8);
-
 
     }
 
