@@ -1,5 +1,6 @@
 package org.techvalleyhigh.frc5881.steamworks.Subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.Util.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PIDController;
@@ -7,39 +8,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveControl {
+public class DriveControl extends Subsystem {
 
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
-
-    /**
-     * String used for SmartDashboard key for Full Power 10' Time
-     */
-    private static final String FULL_POWER_TIME = "Full Power 10' Time";
-
-    /**
-     * String used for SmartDashboard value for Full Speed
-     */
-    private static final String FULL_SPEED_VALUE = "FULL";
-
-    /**
-     * String used for SmartDashboard key for Half Power 10' Time
-     */
-    private static final String HALF_POWER_TIME = "Half Power 10' Time";
-
-    /**
-     * String used for SmartDashboard value for Half Speed
-     */
-    private static final String HALF_SPEED_VALUE = "HALF";
-
-    /**
-     * String used for SmartDashboard key for One-Third Power 10' Time
-     */
-    private static final String ONETHIRD_POWER_TIME = "One-Third Power 10' Time";
-
-    /**
-     * String used for SmartDashboard value for 1/3rd Speed
-     */
-    private static final String ONETHIRD_SPEED_VALUE = "THIRD";
 
     /**
      * String used for SmartDashboard key for Joystick X-Axis Deadzone
@@ -89,20 +60,8 @@ public class DriveControl {
     private void initSmartDashboard() {
         calibrateGyro();
 
-        // Timing settings. These are timed numbers measured as the amount of time it takes
-        // the robot to move 10' at the given power level.
-        SmartDashboard.putNumber(FULL_POWER_TIME, 1.1);
-        SmartDashboard.putNumber(HALF_POWER_TIME, 2.2);
-        SmartDashboard.putNumber(ONETHIRD_POWER_TIME, 3.3);
-
         // Gryo tolerance - used in auto to provide non-perfect directions
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
-
-        autoSpeedChooser = new SendableChooser();
-        autoSpeedChooser.addDefault("Full Speed", FULL_SPEED_VALUE);
-        autoSpeedChooser.addObject("Half-Speed", HALF_SPEED_VALUE);
-        autoSpeedChooser.addObject("1/3rd Speed", ONETHIRD_SPEED_VALUE);
-        SmartDashboard.putData("Autonomous Speed Selection", autoSpeedChooser);
 
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_X, 0.1);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
@@ -117,7 +76,7 @@ public class DriveControl {
     }
 
     public void calibrateGyro() {
-        digitalGyro = RobotMap.driveControlDigitalGyro;
+        digitalGyro = RobotMap.digitalGyro;
         digitalGyro.calibrate();
     }
 
