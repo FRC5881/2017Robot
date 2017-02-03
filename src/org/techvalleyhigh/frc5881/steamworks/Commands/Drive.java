@@ -1,7 +1,7 @@
 package org.techvalleyhigh.frc5881.steamworks.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.techvalleyhigh.frc5881.steamworks.Util.Robot;
+import org.techvalleyhigh.frc5881.steamworks.Robot;
 
 /**
  * Drive command to take joystick input at a given scale and move the robot.
@@ -14,7 +14,7 @@ public class Drive extends Command {
 
         m_SensitivityScale = SensitivityScale;
 
-        requires(Robot.DriveControl);
+        requires(Robot.driveControl);
 
     }
 
