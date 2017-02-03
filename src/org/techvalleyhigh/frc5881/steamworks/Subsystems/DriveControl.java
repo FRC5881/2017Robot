@@ -1,12 +1,10 @@
 package org.techvalleyhigh.frc5881.steamworks.Subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.techvalleyhigh.frc5881.steamworks.Util.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
 
 public class DriveControl extends Subsystem {
 
@@ -54,6 +52,9 @@ public class DriveControl extends Subsystem {
         initSmartDashboard();
     }
 
+    public void stopDrive() {
+
+    }
     /**
      * Initialize the SmartDashboard values.
      */
@@ -79,7 +80,7 @@ public class DriveControl extends Subsystem {
         digitalGyro = RobotMap.digitalGyro;
         digitalGyro.calibrate();
     }
-
+//random comment
     /**
      * Gets the current angle as reported by the 1-axis Gyro.
      *
@@ -103,9 +104,7 @@ public class DriveControl extends Subsystem {
      */
     private void updateDashboard() {
         SmartDashboard.putNumber("Gyro Heading", getGyroAngle());
-        SmartDashboard.putNumber("Gyro PID Output", gyroPID.get());
-        SmartDashboard.putNumber("Left PID Output", leftDrivePIDController.get());
-        SmartDashboard.putNumber("Right PID Output", rightDrivePIDController.get());
+
     }
 
 
