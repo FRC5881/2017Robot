@@ -1,14 +1,16 @@
 package org.techvalleyhigh.frc5881.steamworks.Subsystems;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
+import org.techvalleyhigh.frc5881.steamworks.Robot;
 import org.techvalleyhigh.frc5881.steamworks.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.RobotDrive;
 public class DriveControl extends Subsystem {
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\below Here Before us\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -115,5 +117,13 @@ public class DriveControl extends Subsystem {
     }
 //\/\/\/\/\/\/\/\/\/\/\/Above here before us\/\/\/\/\/\/\/\/\/\/\\/\/\
 
-    
+    /**
+     *Getting Joy Stick values
+     */
+    public void tankDrive(GenericHID leftStick, GenericHID rightStick) {
+        double leftDrive = Robot.oi.joyStickLeft.getY();
+        double rightDrive = Robot.oi.joyStickRight.getY();
+
+    }
+
 }

@@ -13,8 +13,8 @@ public class OI {
     public JoystickButton yButton;
     public JoystickButton backButton;
     public JoystickButton startButton;
-    public Joystick joystickLeft;
-    public Joystick joystickRight;
+    public Joystick joyStickLeft;
+    public Joystick joyStickRight;
     public static int XBOX_LEFT_STICK_Y_AXIS = 2;
     public static int XBOX_RIGHT_STICK_Y_AXIS = 5;
 
