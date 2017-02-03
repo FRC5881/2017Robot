@@ -80,7 +80,7 @@ public class DriveControl extends Subsystem {
         digitalGyro = RobotMap.digitalGyro;
         digitalGyro.calibrate();
     }
-//random comment
+
     /**
      * Gets the current angle as reported by the 1-axis Gyro.
      *
