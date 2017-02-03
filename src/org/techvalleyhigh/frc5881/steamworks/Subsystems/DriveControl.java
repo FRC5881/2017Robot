@@ -107,5 +107,8 @@ public class DriveControl extends Subsystem {
 
     }
 
+    public void takeJoystickInputs(int scaleFactor) {
+
+    }
 
 }
