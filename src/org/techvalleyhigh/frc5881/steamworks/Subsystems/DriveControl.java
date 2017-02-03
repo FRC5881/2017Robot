@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
+import com.ctre.CANTalon;
+
 public class DriveControl extends Subsystem {
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\below Here Before us\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -126,4 +128,8 @@ public class DriveControl extends Subsystem {
 
     }
 
+    public CANTalon talon1 = new CANTalon(0);
+    public CANTalon talon2 = new CANTalon(1);
+    public CANTalon talon3 = new CANTalon(2);
+    public CANTalon talon4 = new CANTalon(3);
 }
