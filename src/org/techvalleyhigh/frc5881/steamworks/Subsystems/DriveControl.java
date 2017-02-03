@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -54,7 +56,7 @@ public class DriveControl extends Subsystem {
     }
 
     public void stopDrive() {
-        super();
+
     }
     /**
      * Initialize the SmartDashboard values.
@@ -105,7 +107,11 @@ public class DriveControl extends Subsystem {
      */
     private void updateDashboard() {
         SmartDashboard.putNumber("Gyro Heading", getGyroAngle());
+
     }
 
+    public void takeJoystickInputs(int scaleFactor) {
+
+    }
 
 }
