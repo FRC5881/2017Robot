@@ -16,10 +16,12 @@ public class OI {
     public JoystickButton startButton;
     public Joystick joyStickLeft;
     public Joystick joyStickRight;
-    public static int XBOX_LEFT_STICK_Y_AXIS = 1;
-    public static int XBOX_RIGHT_STICK_Y_AXIS = 5;
+    public static int LeftY = 1;
+    public static int RightY = 5;
+    public static int LeftTrigger = 2;
+    public static int RightTrigger = 3;
 
-    public OI() {
+    public OI () {
 
         xboxController = new Joystick(0) {
         };
@@ -30,6 +32,8 @@ public class OI {
         // Button 4 == Y Button
         // Button 7 == backButton
         // Button 8 == startButton
+        // Button 9 == leftTrigger
+        // Button 10 == rightTrigger
 
         aButton = new JoystickButton(xboxController, 1);
         bButton = new JoystickButton(xboxController, 2);
