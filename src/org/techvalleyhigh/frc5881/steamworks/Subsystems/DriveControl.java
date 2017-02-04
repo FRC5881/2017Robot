@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.*;
 
 public class DriveControl extends Subsystem {
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\below Here Before us\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -126,10 +127,23 @@ public class DriveControl extends Subsystem {
         double leftDrive = Robot.oi.joyStickLeft.getY();
         double rightDrive = Robot.oi.joyStickRight.getY();
 
+        talonFrontLeft.set(leftDrive);
+        talonBackLeft.set(leftDrive);
+        talonFrontRight.set(rightDrive);
+        talonBackRight.set(rightDrive);
+
+        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
+        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
+        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+
+        
     }
 
-    public CANTalon talon1 = new CANTalon(0);
-    public CANTalon talon2 = new CANTalon(1);
-    public CANTalon talon3 = new CANTalon(2);
-    public CANTalon talon4 = new CANTalon(3);
+    public CANTalon talonFrontLeft = new CANTalon(1);
+    public CANTalon talonBackLeft = new CANTalon(2);
+    public CANTalon talonFrontRight = new CANTalon(3);
+    public CANTalon talonBackRight = new CANTalon(4);
+
+
 }
