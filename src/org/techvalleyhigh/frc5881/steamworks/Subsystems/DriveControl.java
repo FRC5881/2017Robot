@@ -20,8 +20,6 @@ public class DriveControl extends Subsystem {
 
     /**
      * String used for SmartDashboard key for Joystick X-Axis Deadzone
-     */
-    private static final String JOYSTICK_DEADZONE_X = "Joystick X-Axis Deadzone";
 
     /**
      * String used for SmartDashboard key for Joystick Y-Axis Deadzone
@@ -71,8 +69,6 @@ public class DriveControl extends Subsystem {
 
         // Gryo tolerance - used in auto to provide non-perfect directions
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
-
-        SmartDashboard.putNumber(JOYSTICK_DEADZONE_X, 0.1);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
     }
 
@@ -132,12 +128,11 @@ public class DriveControl extends Subsystem {
         talonFrontRight.set(rightDrive);
         talonBackRight.set(rightDrive);
 
-        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
         talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
         talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
 
-        
     }
 
     public CANTalon talonFrontLeft = new CANTalon(1);
