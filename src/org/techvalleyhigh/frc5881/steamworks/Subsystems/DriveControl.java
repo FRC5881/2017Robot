@@ -15,7 +15,6 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
 
 public class DriveControl extends Subsystem {
-//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\below Here Before us\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
 
     /**
@@ -115,7 +114,6 @@ public class DriveControl extends Subsystem {
     public void takeJoystickInputs(int scaleFactor) {
 
     }
-//\/\/\/\/\/\/\/\/\/\/\/Above here before us\/\/\/\/\/\/\/\/\/\/\\/\/\
 
     /**
      *Getting Joy Stick values
@@ -124,16 +122,15 @@ public class DriveControl extends Subsystem {
         double leftDrive = Robot.oi.joyStickLeft.getY();
         double rightDrive = Robot.oi.joyStickRight.getY();
 
+        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
+        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
+        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+
         talonFrontLeft.set(leftDrive);
         talonBackLeft.set(leftDrive);
         talonFrontRight.set(rightDrive);
         talonBackRight.set(rightDrive);
-
-        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
-        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
-        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
-
     }
 
     public CANTalon talonFrontLeft = new CANTalon(1);
