@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.techvalleyhigh.frc5881.steamworks.Commands.*;
 import org.techvalleyhigh.frc5881.steamworks.Subsystems.*;
 
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -30,7 +29,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-       // RobotMap.init(); (uncomment when able to fix)
+        RobotMap.init();
         driveControl = new DriveControl();
         chassis = new Chassis();
 
@@ -43,8 +42,8 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = null;
 
-        driveCommand = new Drive(10);} //delete bracket after uncommenting auto commands
-/*
+        driveCommand = new Drive(10);
+        /*
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Reach Defense", new AutonomousCommand("reach"));
         autoChooser.addObject("Gun It & Breech Defense", new AutonomousCommand("gunit"));
@@ -58,20 +57,24 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
 
         SmartDashboard.putData(Scheduler.getInstance());
+        */
     }
-*/
+
     /**
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
+    @Override
     public void disabledInit() {
 
     }
 
+    @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void autonomousInit() {
         if (autoChooser.getSelected() != null) {
             autonomousCommand = (Command) autoChooser.getSelected();
@@ -95,11 +98,11 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-//        if (driveCommand != null) {
-//        	driveCommand.start();
-//        } else {
-//        	System.err.println("teleopInit() Failed to start Drive command due to null");
-//        }
+        if (driveCommand != null) {
+            driveCommand.start();
+        } else {
+            System.err.println("teleopInit() Failed to start Drive command due to null");
+        }
     }
 
     /**

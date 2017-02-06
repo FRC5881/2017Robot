@@ -6,19 +6,13 @@ import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.Robot;
 import org.techvalleyhigh.frc5881.steamworks.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.RobotDrive;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
-
-    /**
-     * String used for SmartDashboard key for Joystick X-Axis Deadzone
 
     /**
      * String used for SmartDashboard key for Joystick Y-Axis Deadzone
@@ -31,7 +25,7 @@ public class DriveControl extends Subsystem {
 
     private static final RobotDrive robotDrive = RobotMap.driveControlRobotDrive;
 */
-//random
+
     /**
      * Object for access to the 2016 First Choice 1-axis Gyro on the RoboRIO SPI Port.
      */
@@ -41,7 +35,12 @@ public class DriveControl extends Subsystem {
      */
     private SendableChooser autoSpeedChooser;
 
- 
+    private CANTalon talonFrontLeft = new CANTalon(1);
+    private CANTalon talonBackLeft = new CANTalon(2);
+    private CANTalon talonFrontRight = new CANTalon(3);
+    private CANTalon talonBackRight = new CANTalon(4);
+
+
     /**
      * Create the subsystem with a default name.
      */
@@ -70,6 +69,11 @@ public class DriveControl extends Subsystem {
         // Gryo tolerance - used in auto to provide non-perfect directions
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
+
+        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
+        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
+        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     // Put methods for controlling this subsystem
@@ -119,24 +123,11 @@ public class DriveControl extends Subsystem {
      *Getting Joy Stick values
      */
     public void tankDrive(GenericHID leftStick, GenericHID rightStick) {
-        double leftDrive = Robot.oi.joyStickLeft.getY();
-        double rightDrive = Robot.oi.joyStickRight.getY();
-
-        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
-        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
-        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
-
+        double leftDrive = leftStick.getY();
+        double rightDrive = rightStick.getY();
         talonFrontLeft.set(leftDrive);
         talonBackLeft.set(leftDrive);
         talonFrontRight.set(rightDrive);
         talonBackRight.set(rightDrive);
     }
-
-    public CANTalon talonFrontLeft = new CANTalon(1);
-    public CANTalon talonBackLeft = new CANTalon(2);
-    public CANTalon talonFrontRight = new CANTalon(3);
-    public CANTalon talonBackRight = new CANTalon(4);
-
-
 }

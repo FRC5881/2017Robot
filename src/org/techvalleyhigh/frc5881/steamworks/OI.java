@@ -23,8 +23,7 @@ public class OI {
 
     public OI () {
 
-        xboxController = new Joystick(0) {
-        };
+        xboxController = new Joystick(0);
 
         // Button 1 == A Button
         // Button 2 == B Button
@@ -43,7 +42,4 @@ public class OI {
         startButton = new JoystickButton(xboxController, 8);
 
     }
-
-    public GenericHID getXboxController() {return xboxController;}
-
 }
