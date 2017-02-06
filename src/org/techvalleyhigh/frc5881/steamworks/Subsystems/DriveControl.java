@@ -3,6 +3,7 @@ package org.techvalleyhigh.frc5881.steamworks.Subsystems;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
+import org.techvalleyhigh.frc5881.steamworks.OI;
 import org.techvalleyhigh.frc5881.steamworks.Robot;
 import org.techvalleyhigh.frc5881.steamworks.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -122,9 +123,9 @@ public class DriveControl extends Subsystem {
     /**
      *Getting Joy Stick values
      */
-    public void tankDrive(GenericHID leftStick, GenericHID rightStick) {
-        double leftDrive = leftStick.getY();
-        double rightDrive = rightStick.getY();
+    public void tankDrive(GenericHID xboxController) {
+        double leftDrive = xboxController.getRawAxis(OI.LeftY);
+        double rightDrive = xboxController.getRawAxis(OI.RightY);
         talonFrontLeft.set(leftDrive);
         talonBackLeft.set(leftDrive);
         talonFrontRight.set(rightDrive);
