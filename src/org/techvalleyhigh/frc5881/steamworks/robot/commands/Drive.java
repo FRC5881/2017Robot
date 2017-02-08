@@ -1,7 +1,7 @@
-package org.techvalleyhigh.frc5881.steamworks.Commands;
+package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.techvalleyhigh.frc5881.steamworks.Robot;
+import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
 
 /**
  * Drive command to take joystick input at a given scale and move the robot.

@@ -1,12 +1,13 @@
-package org.techvalleyhigh.frc5881.steamworks;
+package org.techvalleyhigh.frc5881.steamworks.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import org.techvalleyhigh.frc5881.steamworks.Commands.*;
-import org.techvalleyhigh.frc5881.steamworks.Subsystems.*;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
+import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Chassis;
+import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
 
 /**
  * The VM is configured to automatically run this class, and to call the

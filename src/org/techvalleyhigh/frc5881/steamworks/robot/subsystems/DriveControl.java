@@ -1,11 +1,10 @@
-package org.techvalleyhigh.frc5881.steamworks.Subsystems;
+package org.techvalleyhigh.frc5881.steamworks.robot.subsystems;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.techvalleyhigh.frc5881.steamworks.Commands.Drive;
-import org.techvalleyhigh.frc5881.steamworks.OI;
-import org.techvalleyhigh.frc5881.steamworks.Robot;
-import org.techvalleyhigh.frc5881.steamworks.RobotMap;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
+import org.techvalleyhigh.frc5881.steamworks.robot.OI;
+import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
