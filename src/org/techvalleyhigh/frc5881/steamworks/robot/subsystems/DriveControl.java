@@ -2,6 +2,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.subsystems;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.robot.OI;
 import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
@@ -116,7 +117,7 @@ public class DriveControl extends Subsystem {
     }
 
     public void takeJoystickInputs(int scaleFactor) {
-
+        tankDrive(Robot.oi.xboxController);
     }
 
     /**
