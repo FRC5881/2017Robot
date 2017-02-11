@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class TrigUtil {
 
-    
+
     public static double getHypotenuseFromSides(double a, double b) {
 
         return Math.sqrt(a*a + b*b);
