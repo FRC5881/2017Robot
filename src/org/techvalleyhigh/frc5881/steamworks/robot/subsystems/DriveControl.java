@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
+
+import java.math.*;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -61,6 +64,7 @@ public class DriveControl extends Subsystem {
     public void stopDrive() {
 
     }
+
     /**
      * Initialize the SmartDashboard values.
      */
@@ -121,7 +125,7 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     *Getting Joy Stick values
+     * Getting Joy Stick values
      */
     public void tankDrive(GenericHID xboxController) {
         double leftDrive = xboxController.getRawAxis(OI.LeftY);
@@ -131,4 +135,5 @@ public class DriveControl extends Subsystem {
         talonFrontRight.set(rightDrive);
         talonBackRight.set(rightDrive);
     }
+
 }
