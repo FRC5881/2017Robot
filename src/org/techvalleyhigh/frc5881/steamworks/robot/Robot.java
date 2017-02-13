@@ -44,8 +44,10 @@ public class Robot extends IterativeRobot {
         autonomousCommand = null;
 
         driveCommand = new Drive(10);
-        /*
+
+        // TODO: Need to set some parameters for autonomous. Are we aiming for center or L/R pegs, is boiler behind, left, right, or opposite side?
         autoChooser = new SendableChooser();
+        /*
         autoChooser.addDefault("Reach Defense", new AutonomousCommand("reach"));
         autoChooser.addObject("Gun It & Breech Defense", new AutonomousCommand("gunit"));
         autoChooser.addObject("Gun it & Breech Moat", new AutonomousCommand("gunit-moat"));

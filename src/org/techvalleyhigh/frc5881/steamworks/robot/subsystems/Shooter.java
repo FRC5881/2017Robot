@@ -16,6 +16,15 @@ import com.ctre.CANTalon.*;
  */
 public abstract class Shooter extends Subsystem {
 
+    // TODO: Need to add motor controllers into RobotMap and reference here
+
+    // TODO: Need to setup Talons w/ attached Encoders, and set for velocity PID
+
+    // TODO: Need to make functions to check to see if we're OK to shoot (distance and angle check + motors at speed)
+
+    // TODO: Need to make function to start motors for shooting
+
+    // TODO: Need to make function to stop shooting
 
 
 }

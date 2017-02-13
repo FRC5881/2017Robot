@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+// TODO Need Javadoc comment
 public class RobotMap {
 
     public static ADXRS450_Gyro digitalGyro;
@@ -28,6 +29,7 @@ public class RobotMap {
         driveControlLeftEncoder = new Encoder(0, 1);
         driveControlRightEncoder = new Encoder(2, 3);
 
+        // TODO: Comment these values - what are they -- where did we get them
         driveControlLeftEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
         LiveWindow.addSensor("Drive Control", "Left Encoder", driveControlLeftEncoder);
         driveControlRightEncoder.setDistancePerPulse((18.84954d / 1440d)*4);

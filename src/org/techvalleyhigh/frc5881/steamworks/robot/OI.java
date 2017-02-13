@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+//TODO: Comment Here
 public class OI {
 
+    //TODO: Comment for each of these -- what is it, what does it do. Use JavaDoc comment / ** format (w/o space)
     public GenericHID xboxController;
     public JoystickButton aButton;
     public JoystickButton bButton;
@@ -14,15 +16,12 @@ public class OI {
     public JoystickButton yButton;
     public JoystickButton backButton;
     public JoystickButton startButton;
-    public Joystick joyStickLeft;
-    public Joystick joyStickRight;
     public static int LeftY = 1;
     public static int RightY = 5;
     public static int LeftTrigger = 2;
     public static int RightTrigger = 3;
 
     public OI () {
-
         xboxController = new Joystick(0);
 
         // Button 1 == A Button
@@ -40,6 +39,5 @@ public class OI {
         yButton = new JoystickButton(xboxController, 4);
         backButton = new JoystickButton(xboxController, 7);
         startButton = new JoystickButton(xboxController, 8);
-
     }
 }

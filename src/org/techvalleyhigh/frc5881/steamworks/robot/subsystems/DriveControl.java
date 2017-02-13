@@ -1,6 +1,7 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.subsystems;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
@@ -11,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -20,22 +20,19 @@ public class DriveControl extends Subsystem {
      * String used for SmartDashboard key for Joystick Y-Axis Deadzone
      */
     private static final String JOYSTICK_DEADZONE_Y = "Joystick Y-Axis Deadzone";
-/*  STILL NOT FIXED (need RobotDrive class
-    private tatic final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
-    private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
-    private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.driveControlDigitalGyro, null);
 
-    private static final RobotDrive robotDrive = RobotMap.driveControlRobotDrive;
-*/
+    private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
+    private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
+    private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.digitalGyro, null);
+
+    // TODO
+    //private static final RobotDrive robotDrive = RobotMap.driveControlRobotDrive;
+
 
     /**
      * Object for access to the 2016 First Choice 1-axis Gyro on the RoboRIO SPI Port.
      */
-    private ADXRS450_Gyro digitalGyro;
-    /**
-     * Chooser for SmartDashboard to select teh autonomous drive speed.
-     */
-    private SendableChooser autoSpeedChooser;
+    private ADXRS450_Gyro digitalGyro = RobotMap.digitalGyro;
 
     // TODO: Should be using from RobotMap
     private CANTalon talonFrontLeft = new CANTalon(1);
@@ -92,7 +89,6 @@ public class DriveControl extends Subsystem {
     }
 
     public void calibrateGyro() {
-        digitalGyro = RobotMap.digitalGyro;
         digitalGyro.calibrate();
     }
 
@@ -122,6 +118,7 @@ public class DriveControl extends Subsystem {
 
     }
 
+    // TODO: Need to scale inputs or ditch the scale factor
     public void takeJoystickInputs(int scaleFactor) {
         tankDrive(Robot.oi.xboxController);
     }
