@@ -17,4 +17,5 @@ import com.ctre.CANTalon.*;
 public abstract class Shooter extends Subsystem {
 
 
+
 }
