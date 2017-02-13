@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
-
-import java.math.*;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -39,6 +36,7 @@ public class DriveControl extends Subsystem {
      */
     private SendableChooser autoSpeedChooser;
 
+    // TODO: Should be using from RobotMap
     private CANTalon talonFrontLeft = new CANTalon(1);
     private CANTalon talonBackLeft = new CANTalon(2);
     private CANTalon talonFrontRight = new CANTalon(3);
@@ -62,7 +60,10 @@ public class DriveControl extends Subsystem {
     }
 
     public void stopDrive() {
-
+        talonBackLeft.set(0);
+        talonBackRight.set(0);
+        talonFrontLeft.set(0);
+        talonFrontRight.set(0);
     }
 
     /**
