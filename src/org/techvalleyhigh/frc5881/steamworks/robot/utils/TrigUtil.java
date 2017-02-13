@@ -65,7 +65,7 @@ public class TrigUtil {
      *         prior to travel, to align to the peg. At the end of travel the negated value of this angle should
      *         result in the bot facing directly at the peg.
      */
-    public static double findAngleToTurnToLineUpWithGear(double deadZone, double distanceGiven, double angleGiven, double cameraDisplacementX, double cameraDisplacementY ) {
+    public static double findAngleToTurnToLineUpWithGear(double deadZone, double distanceGiven, double angleGiven, double cameraDisplacementX, double cameraDisplacementY) {
         /* Creates a vector using distanceGiven as the mangitude and angleGiven as the angle,
          * from this vector we then subtract the camera displacement vector
          * subtract the deadzone from the y-axis magnitude of this new vector

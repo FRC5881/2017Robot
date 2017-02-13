@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -19,8 +20,8 @@ public class DriveControl extends Subsystem {
      * String used for SmartDashboard key for Joystick Y-Axis Deadzone
      */
     private static final String JOYSTICK_DEADZONE_Y = "Joystick Y-Axis Deadzone";
-/* (uncomment when fixed)
-    private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
+/*  STILL NOT FIXED (need RobotDrive class
+    private tatic final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
     private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
     private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.driveControlDigitalGyro, null);
 
@@ -136,5 +137,4 @@ public class DriveControl extends Subsystem {
         talonFrontRight.set(rightDrive);
         talonBackRight.set(rightDrive);
     }
-
 }
