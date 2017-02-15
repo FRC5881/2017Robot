@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Chassis;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
+import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,6 +21,7 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
     public static DriveControl driveControl;
+    public static Shooter shooter;
     public static Chassis chassis;
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
@@ -33,7 +35,12 @@ public class Robot extends IterativeRobot {
         RobotMap.init();
         driveControl = new DriveControl();
         chassis = new Chassis();
+        shooter = new Shooter() {
+            @Override
+            protected void initDefaultCommand() {
 
+            }
+        };
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null

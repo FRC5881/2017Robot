@@ -10,9 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.*;
+import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
 /**
- * Created by HHoyt on 2/4/2017.
+ * Created by CMahoney on 2/4/2017.
  */
 public abstract class Shooter extends Subsystem {
 
@@ -31,6 +32,11 @@ public abstract class Shooter extends Subsystem {
      */
     private static final String RPM_TOLERANCE = "RPM Tolerance";
 
+    /**
+     * String used for SmartDashboard key for shooter angle tolerance
+     */
+    private static final String SHOOTER_ANGLE_TOLERANCE = "Shooter angle tolerance";
+
     // Motor controllers
     private static final CANTalon shooterTopTalon = RobotMap.shooterTopTalon;
     private static final CANTalon shooterBottomTalon = RobotMap.shooterBottomTalon;
@@ -43,6 +49,7 @@ public abstract class Shooter extends Subsystem {
         SmartDashboard.putNumber(MAX_SHOOTER_DISTANCE, 10);
         SmartDashboard.putNumber(MIN_SHOOTER_DISTANCE, 10);
         SmartDashboard.putNumber(RPM_TOLERANCE, 50);
+        SmartDashboard.putNumber(SHOOTER_ANGLE_TOLERANCE, 5);
     }
 
     // TODO: Velocity PID
@@ -53,14 +60,12 @@ public abstract class Shooter extends Subsystem {
      * angle tolerance
      * @param distance Horizontal gistance to goal
      * @param angleDifference Absolute angle difference to the goal
-     * @param bottomMotorRPM the RPM of the bottom motor
-     * @param topMotorRPM the RPM of the top motor
      * @return true or false
      */
     public boolean readyToShootPosition(double distance, double angleDifference) {
        return    (distance < SmartDashboard.getNumber(MAX_SHOOTER_DISTANCE, 10)
                && distance > SmartDashboard.getNumber(MIN_SHOOTER_DISTANCE, 10)
-               && angleDifference < smartDashboard.getNumber(SHOOT_ANGLE_TOLERANCE, 5));
+               && angleDifference < SmartDashboard.getNumber(SHOOTER_ANGLE_TOLERANCE, 5));
     }
 
     /**
@@ -70,7 +75,7 @@ public abstract class Shooter extends Subsystem {
      * @return boolean
      */
     public boolean readyToShootBottomMotor(double currentRPM, double requiredRPM) {
-        return (Math.abs(currentRPM - requiredRPM) < SmartFashboard.getNumber(RPM_TOLERANCE. 50))
+        return (Math.abs(currentRPM - requiredRPM) < SmartDashboard.getNumber(RPM_TOLERANCE, 50));
     }
 
     // TODO: Calculate RPM required to score and add TrigUtil function to add for camera displacement?
@@ -80,9 +85,12 @@ public abstract class Shooter extends Subsystem {
      * @param distance Distance from camera to target
      * @return
      */
+
+    /*
     public double rpmToScore(double distance) {
 
     }
+     */
 
     /**
      * Spins the motors to score
@@ -99,9 +107,11 @@ public abstract class Shooter extends Subsystem {
         double rpmToScore;
         double value;
 
+        /*
         if(readyToShootPosition(distance, angle)) {
+
             if(shooterBottomTalon.get() > 0) {
-                if (readyToShootBottomMotor(bottomTalon.getRPMs(), rpmToScore)) {
+                if (readyToShootBottomMotor()) { //finish
                     shooterTopTalon.set(value)
                 } else {
                     shooterBottomTalon.set(value)
@@ -110,9 +120,15 @@ public abstract class Shooter extends Subsystem {
         } else {
            //Call Assisted Drive To Line Up Shot
         }
+        */
+
+        if(shooterBottomTalon.get() > 0) {
+            shooterTopTalon.set(1);
+        } else {
+            shooterBottomTalon.set(1);
+        }
     }
 
-    // TODO: Need to make function to stop shooting
     public void spinStop() {
         shooterBottomTalon.set(0);
         shooterTopTalon.set(0);

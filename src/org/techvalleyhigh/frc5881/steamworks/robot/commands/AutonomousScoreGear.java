@@ -1,11 +1,14 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
+
+
+import edu.wpi.first.wpilibj.command.Command;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 /**
  * Created by ksharpe on 2/2/2017.
  */
-public class AutonomousCommand extends Command {
+public class AutonomousScoreGear extends Command {
     private static int deadZone = 40;
     private static double cameraDisplacementX = 0;
     private static double cameraDisplacementY = 0;
