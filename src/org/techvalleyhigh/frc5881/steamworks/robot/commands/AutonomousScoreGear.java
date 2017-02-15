@@ -28,7 +28,12 @@ public class AutonomousScoreGear extends Command {
 
     }
 
-    // TODO: Autonomous Plan
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
+
+// TODO: Autonomous Plan
     // Drive to position/Align
     // where is the robot compared to the tape? Left, right, or centered?
     // if left what angle to the right does the robot need to go?
