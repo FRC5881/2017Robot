@@ -21,6 +21,13 @@ public class DriveControl extends Subsystem {
      */
     private static final String JOYSTICK_DEADZONE_Y = "Joystick Y-Axis Deadzone";
 
+    //Talons
+    private static CANTalon talonFrontLeft = RobotMap.talonFrontLeft;
+    private static CANTalon talonBackLeft = RobotMap.talonBackLeft;
+    private static CANTalon talonFrontRight = RobotMap.talonFrontRight;
+    private static CANTalon talonBackRight = RobotMap.talonBackRight;
+
+    //PId controllers
     private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
     private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
     private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.digitalGyro, null);
@@ -33,13 +40,6 @@ public class DriveControl extends Subsystem {
      * Object for access to the 2016 First Choice 1-axis Gyro on the RoboRIO SPI Port.
      */
     private ADXRS450_Gyro digitalGyro = RobotMap.digitalGyro;
-
-    // TODO: Should be using from RobotMap
-    private CANTalon talonFrontLeft = new CANTalon(1);
-    private CANTalon talonBackLeft = new CANTalon(2);
-    private CANTalon talonFrontRight = new CANTalon(3);
-    private CANTalon talonBackRight = new CANTalon(4);
-
 
     /**
      * Create the subsystem with a default name.
@@ -74,10 +74,15 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
 
+        // TODO Comment This
         talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
         talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
         talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
         talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+
+        // TODO Decide on tolerance angle
+        // Shooter angle tolerance
+        SmartDashboard.putNumber(SHOOT_ANGLE_TOLERANCE, 5);
     }
 
     // Put methods for controlling this subsystem
