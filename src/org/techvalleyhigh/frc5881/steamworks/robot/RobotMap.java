@@ -9,21 +9,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class RobotMap {
 
     public static ADXRS450_Gyro digitalGyro;
-    public static Encoder driveControlRightEncoder;
-    public static Encoder driveControlLeftEncoder;
 
     //Talons for tank drive
     public static CANTalon talonFrontLeft;
     public static CANTalon talonBackLeft;
     public static CANTalon talonFrontRight;
     public static CANTalon talonBackRight;
+    public static Encoder driveControlRightEncoder;
+    public static Encoder driveControlLeftEncoder;
 
     // Talons (and encoders) for the shooter
     public static CANTalon shooterBottomTalon;
     public static CANTalon shooterTopTalon;
-    public static Encoder shooterTopEncoder;
-    public static Encoder shooterBottomEncoder;
-
 
     // TODO: Define the talon for intake
     // TODO: Define the encoder for intake ??
@@ -47,11 +44,6 @@ public class RobotMap {
         LiveWindow.addActuator("Shooter Top", "CANTalon", shooterTopTalon);
         shooterBottomTalon = new CANTALON(6);
         Livewindow.addActuator("Shooter Bottom", "CANTalon", shooterBottomTalon);
-
-        shooterTopEncoder = new Encoder(4, 5);
-        LiveWindow.addSensor("Shooter", "Encoder", shooterTopEncoder);
-        shooterBottomEncoder = new Encoder(6, 7);
-        LiveWindow.addSensor("Shooter", "Encoder", shooterBottomEncoder);
 
         //Gyro
         digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);

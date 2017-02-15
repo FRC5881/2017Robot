@@ -15,6 +15,7 @@ import com.ctre.CANTalon.*;
  * Created by HHoyt on 2/4/2017.
  */
 public abstract class Shooter extends Subsystem {
+
     /**
      * String used for SmartDashboard key for max shooter distance
      */
@@ -33,10 +34,6 @@ public abstract class Shooter extends Subsystem {
     // Motor controllers
     private static final CANTalon shooterTopTalon = RobotMap.shooterTopTalon;
     private static final CANTalon shooterBottomTalon = RobotMap.shooterBottomTalon;
-
-    // Encoders
-    private static final Encoder shooterTopEncoder = RobotMap.shooterTopEncoder;
-    private static final Encoder shooterBottomEncoder = RobotMap.shooterBottomEncoder;
 
     // TODO: Find Minium and Maxium distances and angle tolerance (make the shooter)
     /**

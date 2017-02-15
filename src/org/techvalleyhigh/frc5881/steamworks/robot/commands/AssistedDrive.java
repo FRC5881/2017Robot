@@ -5,4 +5,8 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
  */
 public class AssistedDrive extends Command {
     //TODO assisted driving and turning
+
+    public void straight(double inches) {
+
+    }
 }
