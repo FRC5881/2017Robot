@@ -27,9 +27,9 @@ public class DriveControl extends Subsystem {
     private static CANTalon talonBackRight = RobotMap.talonBackRight;
 
     //PId controllers
-    private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
-    private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
-    private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.digitalGyro, null);
+    //private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
+    //private static final PIDController rightDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlRightEncoder, null);
+    //private static final PIDController gyroPID = new PIDController(7, 2, 0, RobotMap.digitalGyro, null);
 
     //PID values
     private static final String LEFT_DRIVE_PID_KP = "Left Drive PID Kp";

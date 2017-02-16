@@ -15,7 +15,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 /**
  * Created by CMahoney on 2/4/2017.
  */
-public abstract class Shooter extends Subsystem {
+public class Shooter extends Subsystem {
 
     /**
      * String used for SmartDashboard key for max shooter distance
@@ -36,10 +36,6 @@ public abstract class Shooter extends Subsystem {
      * String used for SmartDashboard key for shooter angle tolerance
      */
     private static final String SHOOTER_ANGLE_TOLERANCE = "Shooter angle tolerance";
-
-    // Motor controllers
-    private static final CANTalon shooterTopTalon = RobotMap.shooterTopTalon;
-    private static final CANTalon shooterBottomTalon = RobotMap.shooterBottomTalon;
 
     // TODO: Find Minium and Maxium distances and angle tolerance (make the shooter)
     /**
@@ -122,15 +118,20 @@ public abstract class Shooter extends Subsystem {
         }
         */
 
-        if(shooterBottomTalon.get() > 0) {
-            shooterTopTalon.set(1);
+        if(RobotMap.shooterBottomTalon.get() > 0) {
+            RobotMap.shooterTopTalon.set(1);
         } else {
-            shooterBottomTalon.set(1);
+            RobotMap.shooterBottomTalon.set(1);
         }
     }
 
     public void spinStop() {
-        shooterBottomTalon.set(0);
-        shooterTopTalon.set(0);
+        RobotMap.shooterBottomTalon.set(0);
+        RobotMap.shooterTopTalon.set(0);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+
     }
 }

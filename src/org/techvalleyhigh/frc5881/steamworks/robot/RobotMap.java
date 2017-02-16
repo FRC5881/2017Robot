@@ -44,7 +44,7 @@ public class RobotMap {
         //Shooter
         shooterTopTalon = new CANTalon(5);
         LiveWindow.addActuator("Shooter", "CANTalon", shooterTopTalon);
-        shooterBottomTalon = new CANTalon(6);
+        shooterBottomTalon = new CANTalon(7);
         LiveWindow.addActuator("Shooter", "CANTalon", shooterBottomTalon);
 
         //Gyro
@@ -58,7 +58,8 @@ public class RobotMap {
         //Intake
         intakeEncoder = new Encoder(4, 5);
         LiveWindow.addSensor("Intake", "Encoder", intakeEncoder);
-        intakeTalon = new CANTalon(7);
+        intakeTalon = new CANTalon(6);
+        intakeTalon.setControlMode(0);
         LiveWindow.addActuator("Intake", "Talon", intakeTalon);
 
         //pulse per rotation = 1440, Circumference = 18.84954

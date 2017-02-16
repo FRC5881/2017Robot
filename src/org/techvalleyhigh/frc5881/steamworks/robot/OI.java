@@ -20,8 +20,6 @@ public class OI {
     public JoystickButton leftBumper;
     public JoystickButton rightBumper;
 
-    public Shoot robotShoot;
-
     /**
      * Controls Left Tank Drive
      */
@@ -31,27 +29,27 @@ public class OI {
      */
     public static int RightY = 5;
 
-    public static int BUTTON_A = 0;
-    public static int BUTTON_B = 1;
-    public static int BUTTON_X = 2;
-    public static int BUTTON_Y = 3;
-    public static int BUTTON_LEFT_BUMPER = 4;
-    public static int BUTTON_RIGHT_BUMPER = 5;
-    public static int BUTTON_BACK = 6;
-    public static int BUTTON_START = 7;
+    public static int BUTTON_A = 1;
+    public static int BUTTON_B = 2;
+    public static int BUTTON_X = 3;
+    public static int BUTTON_Y = 4;
+    public static int BUTTON_LEFT_BUMPER = 5;
+    public static int BUTTON_RIGHT_BUMPER = 6;
+    public static int BUTTON_BACK = 7;
+    public static int BUTTON_START = 8;
 
 
     public OI () {
         xboxController = new Joystick(0);
 
-        // Button 0 == A Button
-        // Button 1 == B Button
-        // Button 2 == X Button
-        // Button 3 == Y Button
-        // Button 4 == leftBumper
-        // Button 5 == rightBumper
-        // Button 6 == backButton
-        // Button 7 == startButton
+        // Button 1 == A Button
+        // Button 2 == B Button
+        // Button 3 == X Button
+        // Button 4 == Y Button
+        // Button 5 == leftBumper
+        // Button 6 == rightBumper
+        // Button 7 == backButton
+        // Button 8 == startButton
 
 
         aButton = new JoystickButton(xboxController, BUTTON_A);
@@ -64,12 +62,14 @@ public class OI {
         startButton = new JoystickButton(xboxController, BUTTON_START);
 
         //A toggles intake
-        aButton.toggleWhenPressed(new Intake());
+        aButton.whileHeld(new Intake());
 
         //Bumpers toggle shooter
         //Right toggles on Left toggles off
 
-        rightBumper.whenPressed(robotShoot);
-        leftBumper.cancelWhenPressed(robotShoot);
+        Shoot shootCommand = new Shoot();
+
+        rightBumper.whenPressed(shootCommand);
+        leftBumper.cancelWhenPressed(shootCommand);
     }
 }

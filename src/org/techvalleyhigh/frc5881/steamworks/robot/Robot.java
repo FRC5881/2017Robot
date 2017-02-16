@@ -21,8 +21,8 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
     public static DriveControl driveControl;
-    public static Shooter shooter;
-    public static Chassis chassis;
+    public static Shooter shooter = new Shooter();
+    public static Chassis chassis = new Chassis();
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
     Command autonomousCommand;
@@ -33,14 +33,15 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         RobotMap.init();
-        driveControl = new DriveControl();
-        chassis = new Chassis();
-        shooter = new Shooter() {
-            @Override
-            protected void initDefaultCommand() {
 
-            }
-        };
+        try {
+            driveControl = new DriveControl();
+        } catch (Exception ex) {
+            System.err.println("EXCEPTION: ");
+            System.err.println(ex);
+            System.err.println(ex.getCause());
+        }
+
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
         // constructed yet. Thus, their requires() statements may grab null
