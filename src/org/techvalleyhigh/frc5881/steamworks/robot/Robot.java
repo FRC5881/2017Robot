@@ -21,8 +21,8 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
     public static DriveControl driveControl;
-    public static Shooter shooter = new Shooter();
-    public static Chassis chassis = new Chassis();
+    public static Shooter shooter;
+    public static Chassis chassis;
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
     Command autonomousCommand;
@@ -34,13 +34,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         RobotMap.init();
 
-        try {
-            driveControl = new DriveControl();
-        } catch (Exception ex) {
-            System.err.println("EXCEPTION: ");
-            System.err.println(ex);
-            System.err.println(ex.getCause());
-        }
+        driveControl = new DriveControl();
+        shooter = new Shooter();
+        chassis = new Chassis();
 
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -50,6 +46,8 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
         autonomousCommand = null;
+
+
 
         driveCommand = new Drive(10);
 

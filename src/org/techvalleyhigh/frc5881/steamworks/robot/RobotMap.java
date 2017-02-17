@@ -31,41 +31,46 @@ public class RobotMap {
     // TODO: Define ultrasonic for testing
 
     public static void init() {
-        //Tank drive
+        // Talons First
+
+        // Tank drive
         talonFrontLeft = new CANTalon(1);
-        LiveWindow.addActuator("Drive Control", "Front Left Talon", talonFrontLeft);
+        LiveWindow.addActuator("Drive Control", "Front Left Drive Talon", talonFrontLeft);
         talonBackLeft = new CANTalon(2);
-        LiveWindow.addActuator("Drive Control", "Bottom Left Talon", talonBackLeft);
+        LiveWindow.addActuator("Drive Control", "Back Left Drive Talon", talonBackLeft);
         talonFrontRight = new CANTalon(3);
-        LiveWindow.addActuator("Drive Control", "Front Right Talon", talonFrontRight);
+        LiveWindow.addActuator("Drive Control", "Front Right Drive Talon", talonFrontRight);
         talonBackRight = new CANTalon(4);
-        LiveWindow.addActuator("Drive Control", "Bottom Right Talon" , talonBackRight);
+        LiveWindow.addActuator("Drive Control", "Back Right Drive Talon" , talonBackRight);
 
-        //Shooter
+        // Shooter
         shooterTopTalon = new CANTalon(5);
-        LiveWindow.addActuator("Shooter", "CANTalon", shooterTopTalon);
+        LiveWindow.addActuator("Shooter", "Top Talon", shooterTopTalon);
         shooterBottomTalon = new CANTalon(7);
-        LiveWindow.addActuator("Shooter", "CANTalon", shooterBottomTalon);
+        LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
 
-        //Gyro
-        digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-        LiveWindow.addSensor("Drive Control", "DigitalGyro", digitalGyro);
+        // Intake
+        intakeTalon = new CANTalon(6);
+        LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
-        //Drive encoders
+
+        // Encoders
+
+        // Drive encoders
         driveControlLeftEncoder = new Encoder(0, 1);
         driveControlRightEncoder = new Encoder(2, 3);
+        //pulse per rotation = 1440, Circumference = 18.84954
+        driveControlLeftEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
+        LiveWindow.addSensor("Drive Control", "Left Drive Encoder", driveControlLeftEncoder);
+        driveControlRightEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
+        LiveWindow.addSensor("Drive Control", "Right Drive Encoder", driveControlRightEncoder);
 
         //Intake
         intakeEncoder = new Encoder(4, 5);
-        LiveWindow.addSensor("Intake", "Encoder", intakeEncoder);
-        intakeTalon = new CANTalon(6);
-        intakeTalon.setControlMode(0);
-        LiveWindow.addActuator("Intake", "Talon", intakeTalon);
+        LiveWindow.addSensor("Intake", "Intake Encoder", intakeEncoder);
 
-        //pulse per rotation = 1440, Circumference = 18.84954
-        driveControlLeftEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
-        LiveWindow.addSensor("Drive Control", "Left Encoder", driveControlLeftEncoder);
-        driveControlRightEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
-        LiveWindow.addSensor("Drive Control", "Right Encoder", driveControlRightEncoder);
+        // Gyro
+        digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+        LiveWindow.addSensor("Drive Control", "DigitalGyro", digitalGyro);
     }
 }

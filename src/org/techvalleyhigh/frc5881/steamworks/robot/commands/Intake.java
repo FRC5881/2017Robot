@@ -1,5 +1,6 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import org.techvalleyhigh.frc5881.steamworks.robot.*;
 
@@ -17,7 +18,7 @@ public class Intake extends Command {
 
     @Override
     protected void execute() {
-        RobotMap.intakeTalon.set(1);
+        RobotMap.intakeTalon.set(-1);
     }
 
     @Override
@@ -29,6 +30,7 @@ public class Intake extends Command {
     @Override
     protected void initialize() {
         super.initialize();
+        RobotMap.intakeTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     }
 
     @Override
