@@ -21,8 +21,9 @@ public class Intake extends Command {
     }
 
     @Override
-    protected boolean isFinished() {
-        return false;
+    protected void interrupted() {
+        super.interrupted();
+        end();
     }
 
     @Override
@@ -31,9 +32,8 @@ public class Intake extends Command {
     }
 
     @Override
-    protected void interrupted() {
-        super.interrupted();
-        end();
+    protected boolean isFinished() {
+        return false;
     }
 
     @Override

@@ -21,10 +21,6 @@ public class DriveControl extends Subsystem {
     private static final String JOYSTICK_DEADZONE_Y = "Joystick Y-Axis Deadzone";
 
     //Talons
-    private static CANTalon talonFrontLeft = RobotMap.talonFrontLeft;
-    private static CANTalon talonBackLeft = RobotMap.talonBackLeft;
-    private static CANTalon talonFrontRight = RobotMap.talonFrontRight;
-    private static CANTalon talonBackRight = RobotMap.talonBackRight;
 
     //PId controllers
     //private static final PIDController leftDrivePIDController = new PIDController(.2d, .02d, 0, RobotMap.driveControlLeftEncoder, null);
@@ -56,12 +52,6 @@ public class DriveControl extends Subsystem {
     // TODO
     //private static final RobotDrive robotDrive = RobotMap.driveControlRobotDrive;
 
-
-    /**
-     * Object for access to the 2016 First Choice 1-axis Gyro on the RoboRIO SPI Port.
-     */
-    private ADXRS450_Gyro digitalGyro = RobotMap.digitalGyro;
-
     /**
      * Create the subsystem with a default name.
      */
@@ -79,10 +69,10 @@ public class DriveControl extends Subsystem {
     }
 
     public void stopDrive() {
-        talonBackLeft.set(0);
-        talonBackRight.set(0);
-        talonFrontLeft.set(0);
-        talonFrontRight.set(0);
+        RobotMap.talonBackLeft.set(0);
+        RobotMap.talonBackRight.set(0);
+        RobotMap.talonFrontLeft.set(0);
+        RobotMap.talonFrontRight.set(0);
     }
 
     /**
@@ -96,10 +86,10 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
 
         // TODO Comment This
-        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
-        talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
-        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+        RobotMap.talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        RobotMap.talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
+        RobotMap.talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
+        RobotMap.talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
 
         //PID values
         SmartDashboard.putNumber(LEFT_DRIVE_PID_KP, LEFT_DRIVE_PID_KP_DEFAULT);
@@ -160,7 +150,7 @@ public class DriveControl extends Subsystem {
     }
 
     public void calibrateGyro() {
-        digitalGyro.calibrate();
+        RobotMap.digitalGyro.calibrate();
     }
 
     /**
@@ -169,7 +159,7 @@ public class DriveControl extends Subsystem {
      * @return Current Gyro angle. No drift correction is applied.
      */
     public double getGyroAngle() {
-        return digitalGyro.getAngle();
+        return RobotMap.digitalGyro.getAngle();
     }
 
     /**
@@ -200,9 +190,9 @@ public class DriveControl extends Subsystem {
     public void tankDrive(GenericHID xboxController) {
         double leftDrive = xboxController.getRawAxis(OI.LeftYAxis);
         double rightDrive = xboxController.getRawAxis(OI.RightY);
-        talonFrontLeft.set(leftDrive);
-        talonBackLeft.set(leftDrive);
-        talonFrontRight.set(rightDrive);
-        talonBackRight.set(rightDrive);
+        RobotMap.talonFrontLeft.set(leftDrive);
+        RobotMap.talonBackLeft.set(leftDrive);
+        RobotMap.talonFrontRight.set(rightDrive);
+        RobotMap.talonBackRight.set(rightDrive);
     }
 }
