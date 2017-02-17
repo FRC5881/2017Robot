@@ -48,7 +48,7 @@ public class Vision {
         double center = horizontalQuality / 2;
 
         double distanceFromCenter = averageCenter - center;
-
+ 
         return fieldOfViewPerPixel * distanceFromCenter;
     }
 
