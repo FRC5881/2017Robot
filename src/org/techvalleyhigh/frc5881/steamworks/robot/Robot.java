@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Chassis;
@@ -47,26 +49,28 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = null;
 
-
-
         driveCommand = new Drive(10);
+
+        //networktables access keys
 
         // TODO: Need to set some parameters for autonomous. Are we aiming for center or L/R pegs, is boiler behind, left, right, or opposite side?
         autoChooser = new SendableChooser();
-        /*
-        autoChooser.addDefault("Reach Defense", new AutonomousCommand("reach"));
-        autoChooser.addObject("Gun It & Breech Defense", new AutonomousCommand("gunit"));
-        autoChooser.addObject("Gun it & Breech Moat", new AutonomousCommand("gunit-moat"));
-        autoChooser.addObject("Gun it & Breech Rock Wall", new AutonomousCommand("gunit-rockwall"));
-        autoChooser.addObject("Spy-Bot Low Score", new AutonomousCommand("spyscore"));
-        autoChooser.addObject("Breech Defense to Left", new AutonomousCommand("breechleft"));
-        autoChooser.addObject("Breech Defense to Right", new AutonomousCommand("breechright"));
-        autoChooser.addObject("NONE", new AutonomousCommand("null"));
 
-        SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
 
-        SmartDashboard.putData(Scheduler.getInstance());
-        */
+
+        //1. acquire target
+
+
+        //2. angle and distance
+        //3. go!
+        //4. backup
+        //5. left or right? backup more if needed
+        //6. shoot
+
+        //SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
+
+        //SmartDashboard.putData(Scheduler.getInstance());
+
     }
 
     /**

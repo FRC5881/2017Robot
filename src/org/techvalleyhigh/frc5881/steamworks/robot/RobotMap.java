@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -29,8 +30,10 @@ public class RobotMap {
     public static CANTalon intakeTalon;
     public static Encoder intakeEncoder;
 
-    // Ultrasonic
+    //Drive Control
+    public static RobotDrive robotDrive;
 
+    // Ultrasonic
     public static AnalogInput ultrasonic;
 
     // TODO: Define ultrasonic for testing
@@ -81,5 +84,10 @@ public class RobotMap {
         // Ultrasonic
         ultrasonic = new AnalogInput(0);
         LiveWindow.addSensor("Ultrasonic", "Ultrasonic", ultrasonic);
+
+        //Robot Drive
+        robotDrive = new RobotDrive(talonFrontLeft, talonBackLeft, talonFrontRight, talonBackRight);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
 }

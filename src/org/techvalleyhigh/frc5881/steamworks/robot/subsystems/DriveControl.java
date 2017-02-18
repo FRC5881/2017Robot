@@ -2,6 +2,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.subsystems;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
@@ -9,6 +10,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.OI;
 import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon.*;
+import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
@@ -17,6 +19,16 @@ public class DriveControl extends Subsystem {
      * String used for SmartDashboard key for Joystick Y-Axis Deadzone
      */
     private static final String JOYSTICK_DEADZONE_Y = "Joystick Y-Axis Deadzone";
+
+    /**
+     * String used for SmartDashboard key for arcade y Sensitivity
+     */
+    private static final String ARCADE_Y_AXIS_SENSITIVITY = "Arcade Y-Axis Sensitivity";
+
+    /**
+     * String used for SmartDashboard key for arcade x Sensitivity
+     */
+    private static final String ARCADE_X_AXIS_SENSITIVITY = "Arcade X-Axis Sensitivity";
 
     //Talons
 
@@ -86,6 +98,10 @@ public class DriveControl extends Subsystem {
         // Gryo tolerance - used in auto to provide non-perfect directions
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
+
+        //Arcade Sensitivities
+        SmartDashboard.putNumber(ARCADE_X_AXIS_SENSITIVITY, 1);
+        SmartDashboard.putNumber(ARCADE_Y_AXIS_SENSITIVITY, 1);
 
         // TODO Comment This
         RobotMap.talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
@@ -163,6 +179,14 @@ public class DriveControl extends Subsystem {
         return gyroPIDOutput;
     }
 
+    public double getArcadeYAxisSensitivity() {
+        return SmartDashboard.getNumber(ARCADE_Y_AXIS_SENSITIVITY, 1);
+    }
+
+    public double getArcadeXAxisSensitivity() {
+        return SmartDashboard.getNumber(ARCADE_X_AXIS_SENSITIVITY, 1);
+    }
+
     @Override
     public void initDefaultCommand() {
         setDefaultCommand(new Drive(10));
@@ -200,7 +224,7 @@ public class DriveControl extends Subsystem {
 
     // TODO: Need to scale inputs or ditch the scale factor
     public void takeJoystickInputs(int scaleFactor) {
-        tankDrive(Robot.oi.xboxController);
+        modifiedTankDrive(Robot.oi.xboxController);
     }
 
     /**
@@ -208,10 +232,18 @@ public class DriveControl extends Subsystem {
      */
     public void tankDrive(GenericHID xboxController) {
         double leftDrive = xboxController.getRawAxis(OI.LeftYAxis);
-        double rightDrive = xboxController.getRawAxis(OI.RightY);
+        double rightDrive = xboxController.getRawAxis(OI.RightYAxis);
         RobotMap.talonFrontLeft.set(leftDrive);
         RobotMap.talonBackLeft.set(leftDrive);
         RobotMap.talonFrontRight.set(rightDrive);
         RobotMap.talonBackRight.set(rightDrive);
+    }
+
+    public void modifiedTankDrive(GenericHID xboxController) {
+        double y = xboxController.getRawAxis(OI.LeftYAxis);
+        double x = xboxController.getRawAxis(OI.RightXAxis);
+
+        RobotMap.robotDrive.setSensitivity(getArcadeXAxisSensitivity());
+        RobotMap.robotDrive.arcadeDrive(y, x);
     }
 }

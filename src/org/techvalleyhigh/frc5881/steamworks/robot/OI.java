@@ -25,9 +25,13 @@ public class OI {
      */
     public static int LeftYAxis = 1;
     /**
+     * Controls Turning For Arcade Drive
+     */
+    public static int RightXAxis = 4;
+    /**
      * Controls Right Tank Drive
      */
-    public static int RightY = 5;
+    public static int RightYAxis = 5;
 
     public static int BUTTON_A = 1;
     public static int BUTTON_B = 2;
