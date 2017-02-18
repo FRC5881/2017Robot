@@ -3,6 +3,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.utils;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by CMahoney on 2/17/2017.
@@ -66,7 +67,7 @@ public class Vision {
     public static double sanityTestGears(double[] lengths, double[] widths) {
         return 0;
     }
-    
+
     /*
     public double findAreasOfContours() {
         double[] areas = {-1};
@@ -76,9 +77,35 @@ public class Vision {
             // oh crap
         }
 
-        // Check each contour to see if it's valid...
+
     }
     */
+// Check each contour to see if it's valid
+    public ArrayList<Integer> validContourIndexes() {
+        ArrayList<Integer> ints = new ArrayList<>();
 
+        double[] contourHeights = {-1};
+        double[] contourWidths = {-1};
+
+        contourHeights = table.getNumberArray("heights", contourHeights);
+        // widths
+        contourWidths = table.getNumberArray("widths", contourWidths);
+        if (contourHeights.length == 1 && contourHeights[0] == -1) {
+            // oh crap
+            return ints;
+        }
+
+        for (int i = 0; i < contourHeights.length; i++) {
+            double width = contourWidths[i];
+            double height = contourHeights[i];
+
+            // Do math - does ratio of w/h match expected w/in margin of error
+            if (width/height >= 2.3 && width/height <= 2.7) { // Fix this conditional
+                ints.add(i);
+            }
+        }
+
+        return ints;
+    }
     
 }
