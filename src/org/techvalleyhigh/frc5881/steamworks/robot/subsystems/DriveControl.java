@@ -253,7 +253,7 @@ public class DriveControl extends Subsystem {
         double x = xboxController.getRawAxis(OI.RightXAxis);
 
         robotDrive.setSensitivity(getArcadeXAxisSensitivity());
-        robotDrive.arcadeDrive(y, x);
+        robotDrive.arcadeDrive(y, x, true);
     }
 
 }
