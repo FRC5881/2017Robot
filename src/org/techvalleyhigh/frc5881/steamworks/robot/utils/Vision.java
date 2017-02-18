@@ -48,11 +48,8 @@ public class Vision {
         double center = horizontalQuality / 2;
 
         double distanceFromCenter = averageCenter - center;
- 
+
         return fieldOfViewPerPixel * distanceFromCenter;
     }
-
-    public static double sanityTestGears(double[] lengths, double[] widths) {
-        return 0;
-    }
+    
 }

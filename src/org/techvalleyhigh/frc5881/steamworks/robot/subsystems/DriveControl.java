@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon.*;
 import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
+import static org.techvalleyhigh.frc5881.steamworks.robot.RobotMap.*;
+
 public class DriveControl extends Subsystem {
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
 
@@ -63,6 +65,8 @@ public class DriveControl extends Subsystem {
     private double rightDrivePIDOutput;
     private double gyroPIDOutput;
 
+    private RobotDrive robotDrive;
+
     // TODO
     //private static final RobotDrive robotDrive = RobotMap.driveControlRobotDrive;
 
@@ -83,9 +87,9 @@ public class DriveControl extends Subsystem {
     }
 
     public void stopDrive() {
-        RobotMap.talonBackLeft.set(0);
-        RobotMap.talonBackRight.set(0);
-        RobotMap.talonFrontLeft.set(0);
+        talonBackLeft.set(0);
+        talonBackRight.set(0);
+        talonFrontLeft.set(0);
         RobotMap.talonFrontRight.set(0);
     }
 
@@ -104,10 +108,10 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putNumber(ARCADE_Y_AXIS_SENSITIVITY, 1);
 
         // TODO Comment This
-        RobotMap.talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-        RobotMap.talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
+        talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
         RobotMap.talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
-        RobotMap.talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
+        talonBackRight.changeControlMode(TalonControlMode.PercentVbus);
 
         //PID values
         SmartDashboard.putNumber(LEFT_DRIVE_PID_KP, LEFT_DRIVE_PID_KP_DEFAULT);
@@ -128,6 +132,11 @@ public class DriveControl extends Subsystem {
                 RobotMap.driveControlRightEncoder, output -> rightDrivePIDOutput = output);
         gyroPID = new PIDController(getGyroPIDKp(), getGyroPIDKi(), getGyroPIDKd(), RobotMap.digitalGyro,
                 output -> gyroPIDOutput = output);
+
+        //Robot Drive
+        robotDrive = new RobotDrive(talonFrontLeft, talonBackLeft, talonFrontRight, talonBackRight);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
 
     //Getters for PID
@@ -233,17 +242,18 @@ public class DriveControl extends Subsystem {
     public void tankDrive(GenericHID xboxController) {
         double leftDrive = xboxController.getRawAxis(OI.LeftYAxis);
         double rightDrive = xboxController.getRawAxis(OI.RightYAxis);
-        RobotMap.talonFrontLeft.set(leftDrive);
-        RobotMap.talonBackLeft.set(leftDrive);
+        talonFrontLeft.set(leftDrive);
+        talonBackLeft.set(leftDrive);
         RobotMap.talonFrontRight.set(rightDrive);
-        RobotMap.talonBackRight.set(rightDrive);
+        talonBackRight.set(rightDrive);
     }
 
     public void modifiedTankDrive(GenericHID xboxController) {
         double y = xboxController.getRawAxis(OI.LeftYAxis);
         double x = xboxController.getRawAxis(OI.RightXAxis);
 
-        RobotMap.robotDrive.setSensitivity(getArcadeXAxisSensitivity());
-        RobotMap.robotDrive.arcadeDrive(y, x);
+        robotDrive.setSensitivity(getArcadeXAxisSensitivity());
+        robotDrive.arcadeDrive(y, x);
     }
+
 }

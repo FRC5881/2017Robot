@@ -66,7 +66,7 @@ public class OI {
         startButton = new JoystickButton(xboxController, BUTTON_START);
 
         //A toggles intake
-        aButton.whileHeld(new Intake());
+        aButton.toggleWhenPressed(new Intake());
 
         //Bumpers toggle shooter
         //Right toggles on Left toggles off
