@@ -66,8 +66,7 @@ public class Vision {
     public static double sanityTestGears(double[] lengths, double[] widths) {
         return 0;
     }
-
-
+    
     /*
     public double findAreasOfContours() {
         double[] areas = {-1};
