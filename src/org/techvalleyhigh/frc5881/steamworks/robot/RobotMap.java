@@ -2,6 +2,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -27,6 +28,10 @@ public class RobotMap {
     //Intake
     public static CANTalon intakeTalon;
     public static Encoder intakeEncoder;
+
+    // Ultrasonic
+
+    public static AnalogInput ultrasonic;
 
     // TODO: Define ultrasonic for testing
 
@@ -72,5 +77,9 @@ public class RobotMap {
         // Gyro
         digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
         LiveWindow.addSensor("Drive Control", "DigitalGyro", digitalGyro);
+
+        // Ultrasonic
+        ultrasonic = new AnalogInput(0);
+        LiveWindow.addSensor("Ultrasonic", "Ultrasonic", ultrasonic);
     }
 }
