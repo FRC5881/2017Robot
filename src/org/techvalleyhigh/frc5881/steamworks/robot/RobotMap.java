@@ -85,9 +85,5 @@ public class RobotMap {
         ultrasonic = new AnalogInput(0);
         LiveWindow.addSensor("Ultrasonic", "Ultrasonic", ultrasonic);
 
-        //Robot Drive
-        robotDrive = new RobotDrive(talonFrontLeft, talonBackLeft, talonFrontRight, talonBackRight);
-        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
 }
