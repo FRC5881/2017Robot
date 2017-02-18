@@ -232,28 +232,15 @@ public class DriveControl extends Subsystem {
     }
 
     // TODO: Need to scale inputs or ditch the scale factor
-    public void takeJoystickInputs(int scaleFactor) {
-        modifiedTankDrive(Robot.oi.xboxController);
-    }
 
     /**
      * Getting Joy Stick values
      */
-    public void tankDrive(GenericHID xboxController) {
-        double leftDrive = xboxController.getRawAxis(OI.LeftYAxis);
-        double rightDrive = xboxController.getRawAxis(OI.RightYAxis);
-        talonFrontLeft.set(leftDrive);
-        talonBackLeft.set(leftDrive);
-        RobotMap.talonFrontRight.set(rightDrive);
-        talonBackRight.set(rightDrive);
-    }
-
-    public void modifiedTankDrive(GenericHID xboxController) {
-        double y = xboxController.getRawAxis(OI.LeftYAxis);
-        double x = xboxController.getRawAxis(OI.RightXAxis);
+    public void takeJoystickInputs(int scaleFactor) {
+        double y = Robot.oi.xboxController.getRawAxis(OI.LeftYAxis);
+        double x = Robot.oi.xboxController.getRawAxis(OI.RightXAxis);
 
         robotDrive.setSensitivity(getArcadeXAxisSensitivity());
         robotDrive.arcadeDrive(y, x, true);
     }
-
 }
