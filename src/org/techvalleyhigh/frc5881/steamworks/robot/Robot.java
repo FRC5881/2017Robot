@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.AutonomousCommand;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Chassis;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
@@ -49,13 +51,23 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = null;
 
-        driveCommand = new Drive(10);
+        driveCommand = new Drive();
 
         //networktables access keys
 
         // TODO: Need to set some parameters for autonomous. Are we aiming for center or L/R pegs, is boiler behind, left, right, or opposite side?
         autoChooser = new SendableChooser();
+        autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
+        autoChooser.addObject("position 1 & behind", new AutonomousCommand("pos1-b"));
+        autoChooser.addObject("position 1 & opposite", new AutonomousCommand("pos1-o"));
+        autoChooser.addObject("Position 2 & left", new AutonomousCommand("pos2-l"));
+        autoChooser.addObject("Position 2 & right", new AutonomousCommand("pos2-r"));
+        autoChooser.addObject("Position 3 & behind", new AutonomousCommand("pos3-b"));
+        autoChooser.addObject("Position 3 & opposite", new AutonomousCommand("pos3-o"));
 
+        SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
+
+        SmartDashboard.putData(Scheduler.getInstance());
 
 
         //1. acquire target

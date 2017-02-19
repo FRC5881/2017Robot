@@ -8,11 +8,8 @@ import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
  */
 public class Drive extends Command {
 
-    private int m_SensitivityScale;
+    public Drive() {
 
-    public Drive(int SensitivityScale) {
-
-        m_SensitivityScale = SensitivityScale;
 
         requires(Robot.driveControl);
 
@@ -24,7 +21,7 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.driveControl.takeJoystickInputs(m_SensitivityScale);
+        Robot.driveControl.takeJoystickInputs();
     }
 
     // Make this return true when this Command no longer needs to run execute()

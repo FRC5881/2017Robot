@@ -5,33 +5,60 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Intake;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Shoot;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
 
 //TODO: Comment Here
 public class OI {
 
-    //TODO: Comment for each of these -- what is it, what does it do. Use JavaDoc comment / ** format (w/o space)
     public GenericHID xboxController;
+    /**
+     * a button is toggle on/off for intake
+     */
     public JoystickButton aButton;
+
+    /**
+     * b button is not being used as of 2/19
+     */
     public JoystickButton bButton;
+
+    /**
+     * x button is not being used as of 2/19
+     */
     public JoystickButton xButton;
+
+    /**
+     * y button is being used for climber. Hold down y to climb
+     */
     public JoystickButton yButton;
+
+    /**
+     * back button is not being used as of 2/19
+     */
     public JoystickButton backButton;
+
+    /**
+     * start button is not being used as of 2/19
+     */
     public JoystickButton startButton;
+
+    /**
+     * left bumper is not being used as og 2/19
+     */
     public JoystickButton leftBumper;
+
+    /**
+     * right bumper is toggle on/off for shooter
+     */
     public JoystickButton rightBumper;
 
     /**
-     * Controls Left Tank Drive
+     * Controls Left joystick, forward/backward for Arcade Drive
      */
     public static int LeftYAxis = 1;
     /**
-     * Controls Turning For Arcade Drive
+     * Controls right joystick, Turning For Arcade Drive
      */
     public static int RightXAxis = 4;
-    /**
-     * Controls Right Tank Drive
-     */
-    public static int RightYAxis = 5;
 
     public static int BUTTON_A = 1;
     public static int BUTTON_B = 2;
@@ -68,12 +95,11 @@ public class OI {
         //A toggles intake
         aButton.toggleWhenPressed(new Intake());
 
-        //Bumpers toggle shooter
-        //Right toggles on Left toggles off
+        //Right Bumper toggles shooter
 
-        Shoot shootCommand = new Shoot();
+        rightBumper.toggleWhenPressed(new Shoot());
 
-        rightBumper.whenPressed(shootCommand);
-        leftBumper.cancelWhenPressed(shootCommand);
+        // Y when pressed climber
+        yButton.whileHeld(new Climb());
     }
 }

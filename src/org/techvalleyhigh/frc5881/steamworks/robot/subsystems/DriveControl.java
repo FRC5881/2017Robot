@@ -198,7 +198,7 @@ public class DriveControl extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        setDefaultCommand(new Drive(10));
+        setDefaultCommand(new Drive());
     }
 
     public void calibrateGyro() {
@@ -231,16 +231,13 @@ public class DriveControl extends Subsystem {
 
     }
 
-    // TODO: Need to scale inputs or ditch the scale factor
-
     /**
      * Getting Joy Stick values
      */
-    public void takeJoystickInputs(int scaleFactor) {
+    public void takeJoystickInputs() {
         double y = Robot.oi.xboxController.getRawAxis(OI.LeftYAxis);
         double x = Robot.oi.xboxController.getRawAxis(OI.RightXAxis);
 
-        robotDrive.setSensitivity(getArcadeXAxisSensitivity());
         robotDrive.arcadeDrive(y, x, true);
     }
 }

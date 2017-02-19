@@ -3,6 +3,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.Vision;
@@ -81,4 +82,39 @@ public class AutonomousCommand extends Command {
 
     }
 
+    // if boiler on opposite side as robot. robot backs up 50 inches and turns 50 degrees either pos or neg depending on side
+    // if boiler on same side as robot. robot backs up about 20 inches
+    // if starting in the middle. robot backs up about 20 inches and turns 90 degrees either pos or neg depending on boiler's side
+    public AutonomousCommand CommandGroup;{
+
+
+        public AutonomousCommand(String Autoroutine) {
+
+            // If we're not doing nothing, lower the arm...
+            if (Autoroutine != "null") {
+                addSequential(new AutonomousArmClose());
+            }
+
+            // All comments about distance forward from auto line are off by 2'
+            if (Autoroutine == "reach") {
+                // Step 1 -> Forward 141.22" == 11.768'
+                addSequential(new AssistedDrive(distanceAddingRobotLength(9.768), 0));
+
+            } else if (Autoroutine == "gunit") {
+                // Step 1 -> Forward 150" == 12.5'
+                addSequential(new AssistedDrive(distanceAddingRobotLength(10.5), 0));
+            } else if (Autoroutine == "gunit-moat") {
+                addSequential(new AssistedDrive(distanceAddingRobotLength(15), 0));
+            } else if (Autoroutine == "gunit-rockwall") {
+                addSequential(new AssistedDrive(distanceAddingRobotLength(13.5), 0));
+            } else if (Autoroutine == "spyscore") {
+                // Step 1 -> Turn clockwise 60 degrees & Forward 59" == 4.916'
+                addSequential(new AssistedDrive(4.916, 60));
+                // Step 2 -> Turn counter-clockwise 90 degrees & Forward 97.5" == 8.125'
+                addSequential(new AssistedDrive(8.125, -90));
+
+            }
+        }
+    }
 }
+
