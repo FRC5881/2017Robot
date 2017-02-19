@@ -9,30 +9,56 @@ import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
 
 //TODO: Comment Here
 public class OI {
-
-    //TODO: Comment for each of these -- what is it, what does it do. Use JavaDoc comment / ** format (w/o space)
+    
     public GenericHID xboxController;
+    /**
+     * a button is toggle on/off for intake
+     */
     public JoystickButton aButton;
+
+    /**
+     * b button is not being used as of 2/19
+     */
     public JoystickButton bButton;
+
+    /**
+     * x button is not being used as of 2/19
+     */
     public JoystickButton xButton;
+
+    /**
+     * y button is being used for climber. Hold down y to climb
+     */
     public JoystickButton yButton;
+
+    /**
+     * back button is not being used as of 2/19
+     */
     public JoystickButton backButton;
+
+    /**
+     * start button is not being used as of 2/19
+     */
     public JoystickButton startButton;
+
+    /**
+     * left bumper is not being used as og 2/19
+     */
     public JoystickButton leftBumper;
+
+    /**
+     * right bumper is toggle on/off for shooter
+     */
     public JoystickButton rightBumper;
 
     /**
-     * Controls Left Tank Drive
+     * Controls Left joystick, forward/backward for Arcade Drive
      */
     public static int LeftYAxis = 1;
     /**
-     * Controls Turning For Arcade Drive
+     * Controls right joystick, Turning For Arcade Drive
      */
     public static int RightXAxis = 4;
-    /**
-     * Controls Right Tank Drive
-     */
-    public static int RightYAxis = 5;
 
     public static int BUTTON_A = 1;
     public static int BUTTON_B = 2;
