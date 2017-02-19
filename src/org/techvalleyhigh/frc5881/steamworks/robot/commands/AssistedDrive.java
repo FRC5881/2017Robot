@@ -64,7 +64,7 @@ public class AssistedDrive extends Command {
                         rightDrivePIDOutput = output;
                     }
                 });
-        
+
 
         // Limit the PID output range to valid motor control values
         leftDrivePIDController.setOutputRange(-1 * drivePower, drivePower);

@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = null;
 
-        driveCommand = new Drive(10);
+        driveCommand = new Drive();
 
         //networktables access keys
 
