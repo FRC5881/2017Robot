@@ -22,6 +22,8 @@ public class AssistedDrive extends Command {
     private PIDController leftDrivePIDController;
     private PIDController rightDrivePIDController;
 
+    private static double drivePower = 0.5;
+
     /**
      * gyrpPID outputs a value that needs to be applied to the power of drive motors to adjust heading
      * -1 * output to left and output to right
@@ -62,11 +64,7 @@ public class AssistedDrive extends Command {
                         rightDrivePIDOutput = output;
                     }
                 });
-
-        //TODO PID
-        /*
-        // Power setting from SmartDashboard
-        double drivePower = Robot.driveControl.getAutoSpeedValue();
+        
 
         // Limit the PID output range to valid motor control values
         leftDrivePIDController.setOutputRange(-1 * drivePower, drivePower);
@@ -76,12 +74,12 @@ public class AssistedDrive extends Command {
         leftDrivePIDController.setSetpoint(12 * distanceInFeet * -1);
         rightDrivePIDController.setSetpoint(12 * distanceInFeet);
 
-        // Set a 3" tolerance
-        leftDrivePIDController.setAbsoluteTolerance(3);
-        rightDrivePIDController.setAbsoluteTolerance(3);
+        // Set a 1" tolerance
+        leftDrivePIDController.setAbsoluteTolerance(1);
+        rightDrivePIDController.setAbsoluteTolerance(1);
 
         gyroPID = new PIDController(driveControl.getGyroPIDKp(), driveControl.getGyroPIDKi(),
-                driveControl.getGyroPIDKd(), RobotMap.driveControlDigitalGyro, output -> gyroPIDOutput = output);
+                driveControl.getGyroPIDKd(), RobotMap.digitalGyro, output -> gyroPIDOutput = output);
 
         // Limit the gyro output to a small number used to simulate a turn on the joystick.
         gyroPID.setOutputRange(-1, 1);
@@ -98,9 +96,9 @@ public class AssistedDrive extends Command {
 
         // Debugging output very helpful. DS needs a console setting change to see it.
 
-        System.out.println("Assisted Drive Leg - " + distanceInFeet + "ft at power " + drivePower
-                        + " bearing " + relativeBearing + " rel deg " + absBearing);
-                        */
+       System.out.println("Assisted Drive Leg - " + distanceInFeet + "ft at power " + drivePower
+        + " bearing " + relativeBearing + " rel deg " + absBearing);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

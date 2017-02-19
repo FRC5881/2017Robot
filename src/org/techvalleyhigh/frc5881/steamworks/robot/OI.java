@@ -9,7 +9,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
 
 //TODO: Comment Here
 public class OI {
-    
+
     public GenericHID xboxController;
     /**
      * a button is toggle on/off for intake
