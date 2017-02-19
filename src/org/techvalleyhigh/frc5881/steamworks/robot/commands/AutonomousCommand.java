@@ -2,16 +2,15 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.Vision;
 
 /**
  * Created by ksharpe on 2/2/2017.
  */
-public class AutonomousScoreGear extends Command {
+public class AutonomousCommand extends Command {
     private static int deadZone = 40;
     private static double cameraDisplacementX = 0;
     private static double cameraDisplacementY = 0;
@@ -30,7 +29,6 @@ public class AutonomousScoreGear extends Command {
         //drive distanceToDrive
         //turn -degreesToTurn
         //drive deadZone +/- a bit
-
     }
 
     @Override
@@ -55,20 +53,20 @@ public class AutonomousScoreGear extends Command {
     private boolean isCenteredOnGear() {
         NetworkTable table = NetworkTable.getTable("GRIP/myCountours");
 
-        double[] centerY = {-1};
-        centerY = table.getNumberArray("centerY", centerY);
+        double[] centerX = {-1};
+        centerX = table.getNumberArray("centerX", centerX);
 
-        if (centerY.length == 1 && centerY[0] == -1) {
+        if (centerX.length == 1 && centerX[0] == -1) {
             System.out.println("Unable to get center values");
             return false;
         }
 
-        if (centerY.length != 2) {
+        if (centerX.length != 2) {
             System.out.println("Got more than 2 contours!!! OMG HELP!");
             return false;
         }
 
-        double avgCenterY = (centerY[0] + centerY[1]) / 2;
+        double avgCenterY = (centerX[0] + centerX[1]) / 2;
 
         // Image capture 640x480
         // Center == 240
@@ -80,6 +78,7 @@ public class AutonomousScoreGear extends Command {
         }
 
         return false;
+
     }
 
 }
