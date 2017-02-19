@@ -61,7 +61,8 @@ public class RobotMap {
         LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
         // Climber
-        climbTalon = new PWMSpeedController(1);
+        climbTalon = new TalonSRX(1);
+
 
         // Encoders
 
