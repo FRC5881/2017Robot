@@ -1,7 +1,6 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -11,7 +10,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.utils.Vision;
 /**
  * Created by ksharpe on 2/2/2017.
  */
-public class AutonomousCommand extends Command {
+public class AutonomousCommand extends CommandGroup {
     private static int deadZone = 40;
     private static double cameraDisplacementX = 0;
     private static double cameraDisplacementY = 0;
@@ -72,7 +71,7 @@ public class AutonomousCommand extends Command {
         // Image capture 640x480
         // Center == 240
 
-        double offset = Math.abs(240-avgCenterY);
+        double offset = Math.abs(240 - avgCenterY);
 
         if (offset < 10) {
             return true;
@@ -85,36 +84,53 @@ public class AutonomousCommand extends Command {
     // if boiler on opposite side as robot. robot backs up 50 inches and turns 50 degrees either pos or neg depending on side
     // if boiler on same side as robot. robot backs up about 20 inches
     // if starting in the middle. robot backs up about 20 inches and turns 90 degrees either pos or neg depending on boiler's side
-    public AutonomousCommand CommandGroup;{
+    public AutonomousCommand CommandGroup;
 
+    public AutonomousCommand(String Autoroutine) {
 
-        public AutonomousCommand(String Autoroutine) {
+        // Default is going to be null because we want to make sure drive team has to select an autonomous run
+        if (Autoroutine != "null") {
+            // Find peg
+            // Drive to peg
+            // Wait
+            //addSequential(new AutonomousArmClose());
+        }
 
-            // If we're not doing nothing, lower the arm...
-            if (Autoroutine != "null") {
-                addSequential(new AutonomousArmClose());
-            }
+        // All comments about distance forward from auto line are off by 2'
+        if (Autoroutine == "pos1-b") {
+            // Backward 20" == 1.6667'
+            addSequential(new AssistedDrive(1.6667, 0));
 
-            // All comments about distance forward from auto line are off by 2'
-            if (Autoroutine == "reach") {
-                // Step 1 -> Forward 141.22" == 11.768'
-                addSequential(new AssistedDrive(distanceAddingRobotLength(9.768), 0));
+        } else if (Autoroutine == "pos1-o") {
+            // Backward 50" == 4.1667'
+            addSequential(new AssistedDrive(4.1667, 0));
+            // Turn clockwise 50 degrees
+            addSequential(new AssistedDrive(0, 50));
 
-            } else if (Autoroutine == "gunit") {
-                // Step 1 -> Forward 150" == 12.5'
-                addSequential(new AssistedDrive(distanceAddingRobotLength(10.5), 0));
-            } else if (Autoroutine == "gunit-moat") {
-                addSequential(new AssistedDrive(distanceAddingRobotLength(15), 0));
-            } else if (Autoroutine == "gunit-rockwall") {
-                addSequential(new AssistedDrive(distanceAddingRobotLength(13.5), 0));
-            } else if (Autoroutine == "spyscore") {
-                // Step 1 -> Turn clockwise 60 degrees & Forward 59" == 4.916'
-                addSequential(new AssistedDrive(4.916, 60));
-                // Step 2 -> Turn counter-clockwise 90 degrees & Forward 97.5" == 8.125'
-                addSequential(new AssistedDrive(8.125, -90));
+        } else if (Autoroutine == "pos2-l") {
+            // Backward 20" == 1.6667'
+            addSequential(new AssistedDrive(20, 0));
+            //Turn counter-clockwise 90 degrees
+            addSequential(new AssistedDrive(0, -90));
 
-            }
+        } else if (Autoroutine == "pos2-r") {
+            // Backward 20" == 1.6667'
+            addSequential(new AssistedDrive(1.6667, 0));
+            // Turn clockwise 90 degrees
+            addSequential(new AssistedDrive(0, 90));
+
+        } else if (Autoroutine == "pos3-b") {
+            //  50" == 4.1667'
+            addSequential(new AssistedDrive(4.1667, 0));
+
+        } else if (Autoroutine == "pos3-0") {
+            // Backward 50" == 4.1667'
+            addSequential(new AssistedDrive(4.1667, 0));
+            // Turn clockwise 90 degrees
+            addSequential(new AssistedDrive(0, 90));
         }
     }
+
+
 }
 
