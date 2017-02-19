@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Intake;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Shoot;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
 
 //TODO: Comment Here
 public class OI {
@@ -68,12 +69,11 @@ public class OI {
         //A toggles intake
         aButton.toggleWhenPressed(new Intake());
 
-        //Bumpers toggle shooter
-        //Right toggles on Left toggles off
+        //Right Bumper toggles shooter
 
-        Shoot shootCommand = new Shoot();
+        rightBumper.toggleWhenPressed(new Shoot());
 
-        rightBumper.whenPressed(shootCommand);
-        leftBumper.cancelWhenPressed(shootCommand);
+        // Y when pressed climber
+        yButton.whileHeld(new Climb());
     }
 }

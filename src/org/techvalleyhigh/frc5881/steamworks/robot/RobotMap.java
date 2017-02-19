@@ -1,11 +1,7 @@
 package org.techvalleyhigh.frc5881.steamworks.robot;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 // TODO Need Javadoc comment
@@ -14,7 +10,7 @@ public class RobotMap {
     //Gyro
     public static ADXRS450_Gyro digitalGyro;
 
-    //Talons and encoders for tank drive
+    //Talons and encoders for arcade drive
     public static CANTalon talonFrontLeft;
     public static CANTalon talonBackLeft;
     public static CANTalon talonFrontRight;
@@ -29,6 +25,9 @@ public class RobotMap {
     //Intake
     public static CANTalon intakeTalon;
     public static Encoder intakeEncoder;
+
+    // Climber
+    public static PWMSpeedController climbTalon;
 
     //Drive Control
     public static RobotDrive robotDrive;
@@ -61,6 +60,8 @@ public class RobotMap {
         intakeTalon = new CANTalon(6);
         LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
+        // Climber
+        climbTalon = new PWMSpeedController(1);
 
         // Encoders
 
