@@ -10,18 +10,35 @@ import java.util.stream.Collectors;
  * Created by ksharpe on 2/19/2017.
  */
 public class PegUtil {
-    //NetworkTable table = NetworkTable.getTable("GRIP/myCountours");
+    /**
+     * this class contains the calculations that deal with vision for the gearPeg in autonomous or teleop, it validates
+     * the targets and runs calculations to find the angle and distance needed to go to the target.
+     */
+    private static double horizontalQuality = 640;
+
+    /**
+     * Vertical Quality of the image
+     */
+    private static double verticalQuality = 480;
+
+    /**
+     * Horizontal Field of View of the camera
+     */
+    private static double horizontalFieldOfViewDegrees = 50.4;
 
     /*
      * made arrays as arrayLists to be able to use the .remove method later on
      */
-
     private ArrayList<Double> areas = new ArrayList<>();
     private ArrayList<Double> centerX = new ArrayList<>();
     private ArrayList<Double> centerY = new ArrayList<>();
     private ArrayList<Double> widths = new ArrayList<>();
     private ArrayList<Double> heights = new ArrayList<>();
 
+    /**
+     *created arrays that work with NetworkTables
+     * @param contours
+     */
     public PegUtil(NetworkTable contours) {
         areas.addAll(Arrays
                 .stream(contours.getNumberArray("areas", new double[] {}))
@@ -49,35 +66,14 @@ public class PegUtil {
                 .boxed()
                 .collect(Collectors.toList()));
 
-        // do for all....
-
         validContourIndexes();
     }
-
-    private static double horizontalQuality = 640;
-
-    /**
-     * Vertical Quality of the image
-     */
-    private static double verticalQuality = 480;
-
-    /**
-     * Horizontal Field of View of the camera
-     */
-    private static double horizontalFieldOfViewDegrees = 50.4;
-
-    /*
-     * Uses Network Tables values to find distance to target in pixels, using the function
-     * 1587.3 * (area) ^ -0.467 = distance
-     * But there's to areas so we input into the function with both and then find the average
-     *
-     */
 
     /**
      * takes values from arrayList areas, checks to see if there are 2
      * if there are 2 values, gets average and returns average
      * takes average and runs through getDistanceBasedOnArea function, returns value
-     * @return (TODO) -1 indicates an error
+     * @return -1 which indicates an error
      */
     public double findDistanceToPeg() {
         // Is there 0, 1, 2, or more valid contours...
@@ -94,8 +90,16 @@ public class PegUtil {
         }
     }
 
+/*
+     * Uses Network Tables values to find distance to target in pixels, using the function
+     * 1587.3 * (area) ^ -0.467 = distance
+     * But there's to areas so we input into the function with both and then find the average
+     *
+     */
+
     /**
-     * multiplies 1587.3 by area to the -0.467th power
+     * gets the distance to the gear target based on the area, the formula takes area to the -0.467th power and multiplies
+     * it by 1587.3
      * @param area
      * @return
      */
@@ -104,24 +108,22 @@ public class PegUtil {
     }
 
     /**
-     * Returns an estimate of the relative angle difference of the camera. Finds field of view per pixel estimate
-     * calculates average center of each square, calculates distance of the average center from the center of the image
-     * and returns field of view per pixel estimate times this pixel distance to get an estimate angle difference.
-     * @return getAngleBasedOnCenterX of centerX
+     * verifies that there are two contours, if there are 2 then it will call the getAngleBasedOnCenterX function
+     * using centerX as a parameter.
+     * @return double containing the angle to the peg, or if only one contour was found, angle to it's center.
+     *         Returns Double.MIN_VALUE if an error occurs. (Eg. no contours, or more than 2 contours)
      */
     public double findAngleToPeg() {
-        // Rewrite to use centerX
-
         if (centerX.size() == 1) {
             return getAngleBasedOnCenterX(centerX.get(0));
         } else if (centerX.size() == 2) {
             return getAngleBasedOnCenterX(centerX.get(0) + centerX.get(1) / 2);
         } else {
-            return -1;
+            return Double.MIN_VALUE;
         }
     }
 
-    /*
+    /**
      * takes centerX and finds the angle needed to turn by subtracting
      * the center between the contours from the center of view
      * @param centerX
@@ -134,34 +136,23 @@ public class PegUtil {
 
         double distanceFromCenterOfView = centerX - centerOfView;
 
-        double rangeOfScreenPixels = distanceFromCenterOfView - centerOfView;
-
         return fieldOfViewPerPixel * distanceFromCenterOfView;
     }
 
-   /*
+   /**
     * makes sure the contours are good or not, if they aren't then
     * it will remove them from the arrayList
     */
-    public ArrayList<Integer> validContourIndexes() {
-        // Change this to remove invalid countours from all the double[] arrays
-
-        ArrayList<Integer> ints = new ArrayList<>();
-
-        if (heights.size() == 0) {
-            // oh crap
-            return ints;
-        }
+    public void validContourIndexes() {
+        // Change this to remove invalid contours from all the double[] arrays
 
         for (int i = 0; i < heights.size(); i++) {
             double width = widths.get(i);
             double height = heights.get(i);
 
             // Do math - does ratio of w/h match expected w/in margin of error
-            if (width / height >= 2.3 && width / height <= 2.7) { // Fix this conditional
-                ints.add(i);
-            }
-            else{
+            if (width / height >= 2.3 && width / height <= 2.7) {
+            } else {
                 // Remove from each array
                 widths.remove(i);
                 heights.remove(i);
@@ -170,25 +161,44 @@ public class PegUtil {
                 areas.remove(i);
             }
         }
-        return ints;
     }
 
+    /**
+     * retrieves values from the areas arrayList
+     * @return values of areas arrayList
+     */
     public ArrayList<Double> getAreas() {
         return areas;
     }
 
+    /**
+     * retrieves values from centerX arrayList
+     * @return values of centerX arrayList
+     */
     public ArrayList<Double> getCenterX() {
         return centerX;
     }
 
+    /**
+     * retrieves values from centerY arrayList
+     * @return values from centerY arrayList
+     */
     public ArrayList<Double> getCenterY() {
         return centerY;
     }
 
+    /**
+     * retrieves values from widths arrayList
+     * @return values from widths arrayList
+     */
     public ArrayList<Double> getWidths() {
         return widths;
     }
 
+    /**
+     * retrieves values from heights arrayList
+     * @return values from heights arrayList
+     */
     public ArrayList<Double> getHeights() {
         return heights;
     }
