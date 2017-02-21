@@ -30,7 +30,6 @@ public class Intake extends Command {
     @Override
     protected void initialize() {
         super.initialize();
-        RobotMap.intakeTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     }
 
     @Override
