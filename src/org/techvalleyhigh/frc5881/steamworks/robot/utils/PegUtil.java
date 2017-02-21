@@ -15,7 +15,7 @@ public class PegUtil {
      * the targets and runs calculations to find the angle and distance needed to go to the target.
      */
     private static double horizontalQuality = 640;
-    
+
     /**
      * Vertical Quality of the image
      */
