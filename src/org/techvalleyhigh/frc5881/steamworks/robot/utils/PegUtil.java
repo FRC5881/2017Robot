@@ -90,13 +90,6 @@ public class PegUtil {
         }
     }
 
-/*
-     * Uses Network Tables values to find distance to target in pixels, using the function
-     * 1587.3 * (area) ^ -0.467 = distance
-     * But there's to areas so we input into the function with both and then find the average
-     *
-     */
-
     /**
      * gets the distance to the gear target based on the area, the formula takes area to the -0.467th power and multiplies
      * it by 1587.3
@@ -146,13 +139,12 @@ public class PegUtil {
     public void validContourIndexes() {
         // Change this to remove invalid contours from all the double[] arrays
 
-        for (int i = 0; i < heights.size(); i++) {
+        for (int i = heights.size(); i > 0; i--) {
             double width = widths.get(i);
             double height = heights.get(i);
 
             // Do math - does ratio of w/h match expected w/in margin of error
-            if (width / height >= 2.3 && width / height <= 2.7) {
-            } else {
+            if (!(width / height >= 2.3 && width / height <= 2.7)) {
                 // Remove from each array
                 widths.remove(i);
                 heights.remove(i);

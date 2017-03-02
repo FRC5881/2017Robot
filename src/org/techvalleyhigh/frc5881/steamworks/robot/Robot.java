@@ -58,6 +58,9 @@ public class Robot extends IterativeRobot {
         // TODO: Need to set some parameters for autonomous. Are we aiming for center or L/R pegs, is boiler behind, left, right, or opposite side?
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
+        autoChooser.addObject("Score Gear Centered", new AutonomousCommand("Gear Center"));
+        autoChooser.addObject("Score Gear Retrieval", new AutonomousCommand("Gear Retrieval Zone"));
+        autoChooser.addObject("Score Gear Key", new AutonomousCommand("Gear Key Zone"));
         autoChooser.addObject("position 1 & behind", new AutonomousCommand("pos1-b"));
         autoChooser.addObject("position 1 & opposite", new AutonomousCommand("pos1-o"));
         autoChooser.addObject("Position 2 & left", new AutonomousCommand("pos2-l"));
@@ -71,8 +74,6 @@ public class Robot extends IterativeRobot {
 
 
         //1. acquire target
-
-
         //2. angle and distance
         //3. go!
         //4. backup
