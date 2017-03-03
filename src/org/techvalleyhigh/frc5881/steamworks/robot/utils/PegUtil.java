@@ -117,6 +117,14 @@ public class PegUtil {
     }
 
     /**
+     * Returns true or false on weather or not we are centered with the gear
+     * @return
+     */
+    private boolean isCenteredOnGear() {
+        return (findAngleToPeg() < 10);
+    }
+
+    /**
      * takes centerX and finds the angle needed to turn by subtracting
      * the center between the contours from the center of view
      * @param centerX

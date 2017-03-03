@@ -4,6 +4,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.PegUtil;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 /**
@@ -17,38 +18,6 @@ public class AutonomousCommand extends CommandGroup {
     @Override
     protected boolean isFinished() {
         return false;
-    }
-
-    //gear center method
-    private boolean isCenteredOnGear() {
-        NetworkTable table = NetworkTable.getTable("GRIP/myCountours");
-
-        double[] centerX = {-1};
-        centerX = table.getNumberArray("centerX", centerX);
-
-        if (centerX.length == 1 && centerX[0] == -1) {
-            System.out.println("Unable to get center values");
-            return false;
-        }
-
-        if (centerX.length != 2) {
-            System.out.println("Got more than 2 contours!!! OMG HELP!");
-            return false;
-        }
-
-        double avgCenterY = (centerX[0] + centerX[1]) / 2;
-
-        // Image capture 640x480
-        // Center == 240
-
-        double offset = Math.abs(240 - avgCenterY);
-
-        if (offset < 10) {
-            return true;
-        }
-
-        return false;
-
     }
 
     // if boiler on opposite side as robot. robot backs up 50 inches and turns 50 degrees either pos or neg depending on side
@@ -69,16 +38,18 @@ public class AutonomousCommand extends CommandGroup {
     // turn to boiler
     // fire fuel
 
+    PegUtil pegSnapShot;
+
     /**
      * Much of the "Score Gear" autonomous code repeats for each starting position
      */
     private void scoreGear() {
         //Save a snapshot into memory
-        pegSnapShot = new PegUtil();
+        this.pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
 
         // Find peg
-        double distanceToPeg = pegSnapShot.findDistanceToPeg();
-        double angleToPeg = pegSnapShot.findAngleToPeg();
+        double distanceToPeg = this.pegSnapShot.findDistanceToPeg();
+        double angleToPeg = this.pegSnapShot.findAngleToPeg();
 
         // Calculate distance and degress to turn (accounting for camera displacement)
         double distanceToDrive = TrigUtil.findDistanceToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
@@ -88,28 +59,20 @@ public class AutonomousCommand extends CommandGroup {
         addSequential(new AssistedDrive(0, degreesToTurn));
 
         // Drive Distance
-        addSequential(new AssistedDrive(distanceToDrive / 12), 0);
+        addSequential(new AssistedDrive(distanceToDrive / 12, 0));
 
         // Turn -Degress
         addSequential(new AssistedDrive(0, -degreesToTurn));
 
         // Take new snapshot
-        pegSnapShot = new PegUtil();
+        pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
 
-        // Recalculate Degrees
-        addSequential(double angleToPeg = pegSnapShot.findAngleToPeg());
+        // Recalculate Degrees && Turn
+        addSequential(new AssistedDrive(0, pegSnapShot.findAngleToPeg()));
 
-        // Turn
-        addSequential(new AssistedDrive(0, angleToPeg));
-
-        // Recalculate Distance
-        addSequential(double distanceToGear = pegSnapShot.findDistanceToPeg());
-
-        // Drive if the bot is too close it will start getting wrong readings
-        addSequential(new AssistedDrive(distanceToPeg / 12 < deadZone ? distanceToPeg / 12 : deadZone, 0);
+        // Recalculate Distance && Drive, if the bot is too close it will start getting wrong readings
+        addSequential(new AssistedDrive(pegSnapShot.findDistanceToPeg() / 12 < deadZone ? pegSnapShot.findDistanceToPeg() / 12 : deadZone, 0));
     }
-
-    Pegutil pegSnapShot;
 
     public AutonomousCommand(String Autoroutine) {
 
