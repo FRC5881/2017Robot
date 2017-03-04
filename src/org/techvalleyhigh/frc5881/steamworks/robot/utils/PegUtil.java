@@ -154,7 +154,7 @@ public class PegUtil {
             // Do math - does ratio of w/h match expected w/in margin of error
             // Ratio of tested values has a range of 0.43 < x < 0.45
             // (Room for error)
-            if (!(width / height >= 4.1 && width / height <= 4.7)) {
+            if (!(width / height >= 0.41 && width / height <= 0.47)) {
                 // Remove from each array
                 widths.remove(i);
                 heights.remove(i);
