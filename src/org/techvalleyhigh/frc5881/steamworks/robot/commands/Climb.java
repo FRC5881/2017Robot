@@ -1,6 +1,7 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
 import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
 /**
@@ -17,8 +18,10 @@ public class Climb extends Command {
 
     @Override
     protected void execute() {
-        RobotMap.climbTalon.set(1);
+        RobotMap.climbTalon1.set(1);
+        RobotMap.climbTalon2.set(-1);
     }
+
 
     @Override
     protected void interrupted() {
@@ -38,7 +41,8 @@ public class Climb extends Command {
 
     @Override
     protected void end() {
-        RobotMap.climbTalon.set(0);
+        RobotMap.climbTalon1.set(0);
+        RobotMap.climbTalon2.set(0);
     }
 }
 

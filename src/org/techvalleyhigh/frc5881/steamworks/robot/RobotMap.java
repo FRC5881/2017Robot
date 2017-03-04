@@ -27,7 +27,8 @@ public class RobotMap {
     public static Encoder intakeEncoder;
 
     // Climber
-    public static PWMSpeedController climbTalon;
+    public static PWMSpeedController climbTalon1;
+    public static PWMSpeedController climbTalon2;
 
     //Drive Control
     public static RobotDrive robotDrive;
@@ -61,8 +62,8 @@ public class RobotMap {
         LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
         // Climber
-        climbTalon = new TalonSRX(1);
-
+        climbTalon1 = new TalonSRX(1);
+        climbTalon2 = new TalonSRX(2);
 
         // Encoders
 

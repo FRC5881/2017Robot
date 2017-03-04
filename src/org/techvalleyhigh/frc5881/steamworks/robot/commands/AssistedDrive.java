@@ -36,6 +36,9 @@ public class AssistedDrive extends Command {
 
     public AssistedDrive(double distanceInFeet, double relativeBearing) {
 
+        if(distanceInFeet == 0 && relativeBearing == 0) {
+            return;
+        }
         this.distanceInFeet = distanceInFeet;
         this.relativeBearing = relativeBearing;
 

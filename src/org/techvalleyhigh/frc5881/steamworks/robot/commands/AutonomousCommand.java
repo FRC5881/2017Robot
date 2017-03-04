@@ -51,24 +51,24 @@ public class AutonomousCommand extends CommandGroup {
         double distanceToPeg = this.pegSnapShot.findDistanceToPeg();
         double angleToPeg = this.pegSnapShot.findAngleToPeg();
 
-        // Calculate distance and degress to turn (accounting for camera displacement)
+        // Calculate distance and degrees to turn (accounting for camera displacement)
         double distanceToDrive = TrigUtil.findDistanceToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
         double degreesToTurn = TrigUtil.findAngleToTurnToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
 
         // Turn Degrees
-        addSequential(new AssistedDrive(0, degreesToTurn));
+        addSequential(new AssistedDrive(0, degreesToTurn < 2.5 ? 0 : degreesToTurn));
 
         // Drive Distance
         addSequential(new AssistedDrive(distanceToDrive / 12, 0));
 
-        // Turn -Degress
+        // Turn -Degrees
         addSequential(new AssistedDrive(0, -degreesToTurn));
 
         // Take new snapshot
         pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
 
         // Recalculate Degrees && Turn
-        addSequential(new AssistedDrive(0, pegSnapShot.findAngleToPeg()));
+        addSequential(new AssistedDrive(0, pegSnapShot.findAngleToPeg() < 2.5 ? 0 : pegSnapShot.findAngleToPeg()));
 
         // Recalculate Distance && Drive, if the bot is too close it will start getting wrong readings
         addSequential(new AssistedDrive(pegSnapShot.findDistanceToPeg() / 12 < deadZone ? pegSnapShot.findDistanceToPeg() / 12 : deadZone, 0));
@@ -81,28 +81,14 @@ public class AutonomousCommand extends CommandGroup {
 
             // x' == x" / 12
 
-            if(Autoroutine == "Gear Retrieval Zone") {
-                // Move to pass base line move into Neurtal Zone and turn (starting on retrevial side)
-                // Distance is just an estimation (free to change with practice)
-                addSequential(new AssistedDrive(18, 0));
-
-                // Turn to aim towards peg, turn 60 degrees counter clockwise
-                addSequential(new AssistedDrive(0, -60));
+            if(Autoroutine == "Gear Boiler") {
+                // Move to pass base line move out of the key
+                addSequential(new AssistedDrive(60/12, 0));
 
                 //Score gear
                 scoreGear();
-            } else if(Autoroutine == "Gear Key Zone") {
-                // Move to pass base line move into Neutral zone and turn (starting on key side)
-                // Distance is just an estimation (free to change with practice)
-                addSequential(new AssistedDrive(18, 0));
-
-                // Turn to aim towards peg, turn 60 degrees clockwise
-                addSequential(new AssistedDrive(0, 60));
-
-                //Score Gear
-                scoreGear();
-            } else if(Autoroutine == "Gear Center") {
-                //starting centered on the center gear run the score gear function
+            } else if(Autoroutine == "Gear Not Boiler") {
+                // Starting anywhere other than the key
                 scoreGear();
 
             } else if(Autoroutine == "Baseline") {
@@ -142,6 +128,5 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new AssistedDrive(0, 90));
             }
         }
-
     }
 }
