@@ -18,6 +18,11 @@ import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 public class Shooter extends Subsystem {
 
     /**
+     * String used for testing the shooter at different speeds in the smart dashboard
+     */
+    private static final String SHOOTER_SPEED = "Shooter Speed";
+
+    /**
      * String used for SmartDashboard key for max shooter distance
      */
     private static final String MAX_SHOOTER_DISTANCE = "Max Shooter Distance";
@@ -46,6 +51,7 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber(MIN_SHOOTER_DISTANCE, 10);
         SmartDashboard.putNumber(RPM_TOLERANCE, 50);
         SmartDashboard.putNumber(SHOOTER_ANGLE_TOLERANCE, 5);
+        SmartDashboard.putNumber(SHOOTER_SPEED, 1);
     }
 
     // TODO: Velocity PID
@@ -94,7 +100,7 @@ public class Shooter extends Subsystem {
     public void spinToScore() {
         //Call vision to find distance and angle difference
         //Call rpmToScore to rpm required
-        //Tranlate RPM's to motor speed (bewteen 0 - 1)
+        //Translate RPM's to motor speed (between 0 - 1)
         //Spin bottom motor to speed
         //Spin second motor to speed once bottom motor reachs speed
 

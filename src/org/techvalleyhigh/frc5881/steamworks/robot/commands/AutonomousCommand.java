@@ -4,81 +4,20 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.PegUtil;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.Vision;
 
 /**
  * Created by ksharpe on 2/2/2017.
  */
 public class AutonomousCommand extends CommandGroup {
     private static int deadZone = 40;
-    private static double cameraDisplacementX = 0;
-    private static double cameraDisplacementY = 0;
-
-    /**
-     * In the end calling this fuction will just score the gear
-     *
-     * @param distanceToGear returned by vision with the distance of the robot to the gear
-     * @param angleToGear    returned by vision that tells the robots angler displacement
-     */
-    public void scoreGear(double distanceToGear, double angleToGear) {
-        double distanceToDrive = TrigUtil.findDistanceToLineUpWithGear(deadZone, distanceToGear, angleToGear, cameraDisplacementX, cameraDisplacementY);
-        double degreesToTurn = TrigUtil.findAngleToTurnToLineUpWithGear(deadZone, distanceToGear, angleToGear, cameraDisplacementX, cameraDisplacementY);
-
-        //turn degreesToTurn
-        //drive distanceToDrive
-        //turn -degreesToTurn
-        //drive deadZone +/- a bit
-    }
+    private static double pegCameraDisplacementX = 0;
+    private static double pegCameraDisplacementY = 0;
 
     @Override
     protected boolean isFinished() {
         return false;
-    }
-
-// TODO: Autonomous Plan
-    // Drive to position/Align
-    // where is the robot compared to the tape? Left, right, or centered?
-    // if left what angle to the right does the robot need to go?
-    // if right what angle to the left does the robot need to go?
-    // push in
-    // once centered. How far away is the robot to the object? does it need to go 5ft, 10 ft, 2ft, 20ft?
-    // WAIT!!!
-    // the robot needs to wait long enough for the person to pull up the lever with the gear on it
-    // back up
-    // turn to boiler
-    // fire fuel
-
-    //gear center method
-    private boolean isCenteredOnGear() {
-        NetworkTable table = NetworkTable.getTable("GRIP/myCountours");
-
-        double[] centerX = {-1};
-        centerX = table.getNumberArray("centerX", centerX);
-
-        if (centerX.length == 1 && centerX[0] == -1) {
-            System.out.println("Unable to get center values");
-            return false;
-        }
-
-        if (centerX.length != 2) {
-            System.out.println("Got more than 2 contours!!! OMG HELP!");
-            return false;
-        }
-
-        double avgCenterY = (centerX[0] + centerX[1]) / 2;
-
-        // Image capture 640x480
-        // Center == 240
-
-        double offset = Math.abs(240 - avgCenterY);
-
-        if (offset < 10) {
-            return true;
-        }
-
-        return false;
-
     }
 
     // if boiler on opposite side as robot. robot backs up 50 inches and turns 50 degrees either pos or neg depending on side
@@ -86,51 +25,108 @@ public class AutonomousCommand extends CommandGroup {
     // if starting in the middle. robot backs up about 20 inches and turns 90 degrees either pos or neg depending on boiler's side
     public AutonomousCommand CommandGroup;
 
+    // TODO: Autonomous Plan
+    // once centered. How far away is the robot to the object? does it need to go 5ft, 10 ft, 2ft, 20ft?
+    // WAIT!!!
+    // the robot needs to wait long enough for the person to pull up the lever with the gear on it
+    // Drive to position/Align
+    // where is the robot compared to the tape? Left, right, or centered?
+    // if left what angle to the right does the robot need to go?
+    // if right what angle to the left does the robot need to go?
+    // push in
+    // back up
+    // turn to boiler
+    // fire fuel
+
+    PegUtil pegSnapShot;
+
+    /**
+     * Much of the "Score Gear" autonomous code repeats for each starting position
+     */
+    private void scoreGear() {
+        //Save a snapshot into memory
+        this.pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
+
+        // Find peg
+        double distanceToPeg = this.pegSnapShot.findDistanceToPeg();
+        double angleToPeg = this.pegSnapShot.findAngleToPeg();
+
+        // Calculate distance and degrees to turn (accounting for camera displacement)
+        double distanceToDrive = TrigUtil.findDistanceToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
+        double degreesToTurn = TrigUtil.findAngleToTurnToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
+
+        // Turn Degrees
+        addSequential(new AssistedDrive(0, degreesToTurn < 2.5 ? 0 : degreesToTurn));
+
+        // Drive Distance
+        addSequential(new AssistedDrive(distanceToDrive / 12, 0));
+
+        // Turn -Degrees
+        addSequential(new AssistedDrive(0, -degreesToTurn));
+
+        // Take new snapshot
+        pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
+
+        // Recalculate Degrees && Turn
+        addSequential(new AssistedDrive(0, pegSnapShot.findAngleToPeg() < 2.5 ? 0 : pegSnapShot.findAngleToPeg()));
+
+        // Recalculate Distance && Drive, if the bot is too close it will start getting wrong readings
+        addSequential(new AssistedDrive(pegSnapShot.findDistanceToPeg() / 12 < deadZone ? pegSnapShot.findDistanceToPeg() / 12 : deadZone, 0));
+    }
+
     public AutonomousCommand(String Autoroutine) {
 
         // Default is going to be null because we want to make sure drive team has to select an autonomous run
         if (Autoroutine != "null") {
-            // Find peg
-            // Drive to peg
-            // Wait
-            //addSequential(new AutonomousArmClose());
-        }
 
-        // All comments about distance forward from auto line are off by 2'
-        if (Autoroutine == "pos1-b") {
-            // Backward 20" == 1.6667'
-            addSequential(new AssistedDrive(1.6667, 0));
+            // x' == x" / 12
 
-        } else if (Autoroutine == "pos1-o") {
-            // Backward 50" == 4.1667'
-            addSequential(new AssistedDrive(4.1667, 0));
-            // Turn clockwise 50 degrees
-            addSequential(new AssistedDrive(0, 50));
+            if(Autoroutine == "Gear Boiler") {
+                // Move to pass base line move out of the key
+                addSequential(new AssistedDrive(60/12, 0));
 
-        } else if (Autoroutine == "pos2-l") {
-            // Backward 20" == 1.6667'
-            addSequential(new AssistedDrive(20, 0));
-            //Turn counter-clockwise 90 degrees
-            addSequential(new AssistedDrive(0, -90));
+                //Score gear
+                scoreGear();
+            } else if(Autoroutine == "Gear Not Boiler") {
+                // Starting anywhere other than the key
+                scoreGear();
 
-        } else if (Autoroutine == "pos2-r") {
-            // Backward 20" == 1.6667'
-            addSequential(new AssistedDrive(1.6667, 0));
-            // Turn clockwise 90 degrees
-            addSequential(new AssistedDrive(0, 90));
+            } else if(Autoroutine == "Baseline") {
+                // Crosses Baseline (10 feet just to be safe)
+                addSequential(new AssistedDrive(10, 0));
 
-        } else if (Autoroutine == "pos3-b") {
-            //  50" == 4.1667'
-            addSequential(new AssistedDrive(4.1667, 0));
+            } else if (Autoroutine == "pos1-b") {
+                // Backward 20" == 1.6667'
+                addSequential(new AssistedDrive(1.6667, 0));
 
-        } else if (Autoroutine == "pos3-0") {
-            // Backward 50" == 4.1667'
-            addSequential(new AssistedDrive(4.1667, 0));
-            // Turn clockwise 90 degrees
-            addSequential(new AssistedDrive(0, 90));
+            } else if (Autoroutine == "pos1-o") {
+                // Backward 50" == 4.1667'
+                addSequential(new AssistedDrive(4.1667, 0));
+                // Turn clockwise 50 degrees
+                addSequential(new AssistedDrive(0, 50));
+
+            } else if (Autoroutine == "pos2-l") {
+                // Backward 20" == 1.6667'
+                addSequential(new AssistedDrive(20, 0));
+                //Turn counter-clockwise 90 degrees
+                addSequential(new AssistedDrive(0, -90));
+
+            } else if (Autoroutine == "pos2-r") {
+                // Backward 20" == 1.6667'
+                addSequential(new AssistedDrive(1.6667, 0));
+                // Turn clockwise 90 degrees
+                addSequential(new AssistedDrive(0, 90));
+
+            } else if (Autoroutine == "pos3-b") {
+                //  50" == 4.1667'
+                addSequential(new AssistedDrive(4.1667, 0));
+
+            } else if (Autoroutine == "pos3-0") {
+                // Backward 50" == 4.1667'
+                addSequential(new AssistedDrive(4.1667, 0));
+                // Turn clockwise 90 degrees
+                addSequential(new AssistedDrive(0, 90));
+            }
         }
     }
-
-
 }
-

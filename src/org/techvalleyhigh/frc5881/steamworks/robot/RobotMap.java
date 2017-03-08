@@ -27,7 +27,8 @@ public class RobotMap {
     public static Encoder intakeEncoder;
 
     // Climber
-    public static TalonSRX climbTalon;
+    public static TalonSRX climbTalon1;
+    public static TalonSRX climbTalon2;
 
     //Drive Control
     public static RobotDrive robotDrive;
@@ -74,15 +75,15 @@ public class RobotMap {
         shooterBottomTalon.enableControl();
         LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
 
-
         // Intake
         intakeTalon = new TalonSRX(0);
         LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
         // Climber
-        climbTalon = new TalonSRX(1);
-        LiveWindow.addActuator("Climber", "Climber Talon", climbTalon);
-
+        climbTalon1 = new TalonSRX(1);
+        LiveWindow.addActuator("Climber", "Climber 1", climbTalon1);
+        climbTalon2 = new TalonSRX(2);
+        LiveWindow.addActuator("Climber", "Climber 2", climbTalon2);
 
         // Encoders
 
