@@ -119,10 +119,15 @@ public class Shooter extends Subsystem {
         */
 
         if(RobotMap.shooterBottomTalon.get() > 0) {
-            RobotMap.shooterTopTalon.set(1);
+            RobotMap.shooterTopTalon.set(3000);
         } else {
-            RobotMap.shooterBottomTalon.set(1);
+            RobotMap.shooterBottomTalon.set(3000);
         }
+
+        SmartDashboard.putNumber("TopShooterVoltage", RobotMap.shooterTopTalon.getOutputVoltage()/RobotMap.shooterTopTalon.getBusVoltage());
+        SmartDashboard.putNumber("TopShooterSpeed", RobotMap.shooterTopTalon.getSpeed());
+        SmartDashboard.putNumber("BottomShooterVoltage", RobotMap.shooterBottomTalon.getOutputVoltage()/RobotMap.shooterBottomTalon.getBusVoltage());
+        SmartDashboard.putNumber("BottomShooterSpeed", RobotMap.shooterBottomTalon.getSpeed());
     }
 
     public void spinStop() {
