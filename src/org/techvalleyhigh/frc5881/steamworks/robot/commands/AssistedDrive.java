@@ -34,7 +34,7 @@ public class AssistedDrive extends Command {
     private double rightDrivePIDOutput = 0;
     private double gyroPIDOutput = 0;
 
-    public AssistedDrive(double distanceInFeet, double relativeBearing) {
+    public                                                                          AssistedDrive(double distanceInFeet, double relativeBearing) {
 
         if(distanceInFeet == 0 && relativeBearing == 0) {
             return;

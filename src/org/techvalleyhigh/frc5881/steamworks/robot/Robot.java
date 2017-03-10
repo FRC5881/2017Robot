@@ -1,5 +1,6 @@
 package org.techvalleyhigh.frc5881.steamworks.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -60,6 +61,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
         autoChooser.addObject("Gear Boiler", new AutonomousCommand("Gear Center"));
         autoChooser.addObject("Gear Not Boiler", new AutonomousCommand("Gear Not Boiler"));
+        autoChooser.addObject("Cross Baseline", new AutonomousCommand("Baseline"));
         autoChooser.addObject("position 1 & behind", new AutonomousCommand("pos1-b"));
         autoChooser.addObject("position 1 & opposite", new AutonomousCommand("pos1-o"));
         autoChooser.addObject("Position 2 & left", new AutonomousCommand("pos2-l"));
@@ -83,6 +85,8 @@ public class Robot extends IterativeRobot {
 
         //SmartDashboard.putData(Scheduler.getInstance());
 
+
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     /**

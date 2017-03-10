@@ -42,9 +42,9 @@ public class RobotMap {
         // Talons First
 
         // Tank drive
-        talonFrontLeft = new CANTalon(1);
+        talonFrontLeft = new CANTalon(5);
         LiveWindow.addActuator("Drive Control", "Front Left Drive Talon", talonFrontLeft);
-        talonBackLeft = new CANTalon(2);
+        talonBackLeft = new CANTalon(6);
         LiveWindow.addActuator("Drive Control", "Back Left Drive Talon", talonBackLeft);
         talonFrontRight = new CANTalon(3);
         LiveWindow.addActuator("Drive Control", "Front Right Drive Talon", talonFrontRight);
@@ -52,13 +52,13 @@ public class RobotMap {
         LiveWindow.addActuator("Drive Control", "Back Right Drive Talon" , talonBackRight);
 
         // Shooter
-        shooterTopTalon = new CANTalon(6);
+        shooterTopTalon = new CANTalon(1);
         LiveWindow.addActuator("Shooter", "Top Talon", shooterTopTalon);
-        shooterBottomTalon = new CANTalon(7);
+        shooterBottomTalon = new CANTalon(2);
         LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
 
         // Intake
-        intakeTalon = new CANTalon(5);
+        intakeTalon = new CANTalon(7);
         LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
 
         // Climber
