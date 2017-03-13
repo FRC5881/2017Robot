@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
     public static DriveControl driveControl;
-    public static Shooter shooter;
+    //public static Shooter shooter;
     public static Chassis chassis;
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         RobotMap.init();
 
         driveControl = new DriveControl();
-        shooter = new Shooter();
+        //shooter = new Shooter();
         chassis = new Chassis();
 
         // OI must be constructed after subsystems. If the OI creates Commands

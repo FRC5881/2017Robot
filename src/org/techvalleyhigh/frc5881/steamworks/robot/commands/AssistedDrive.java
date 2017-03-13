@@ -34,7 +34,7 @@ public class AssistedDrive extends Command {
     private double rightDrivePIDOutput = 0;
     private double gyroPIDOutput = 0;
 
-    public                                                                          AssistedDrive(double distanceInFeet, double relativeBearing) {
+    public AssistedDrive(double distanceInFeet, double relativeBearing) {
 
         if(distanceInFeet == 0 && relativeBearing == 0) {
             return;
@@ -137,7 +137,7 @@ public class AssistedDrive extends Command {
         gyroPID.disable();
 
         Robot.driveControl.stopDrive();
-        Robot.shooter.spinStop();
+        //Robot.shooter.spinStop();
     }
 
     // Called when another command which requires one or more of the same

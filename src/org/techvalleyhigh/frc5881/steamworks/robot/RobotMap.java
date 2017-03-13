@@ -18,13 +18,15 @@ public class RobotMap {
     public static Encoder driveControlRightEncoder;
     public static Encoder driveControlLeftEncoder;
 
+    /*
     //Talons for the shooter
     public static CANTalon shooterBottomTalon;
     public static CANTalon shooterTopTalon;
+    */
 
-    //Intake
-    public static TalonSRX intakeTalon;
-    public static Encoder intakeEncoder;
+    //Exhaust
+    public static TalonSRX exhaustTalon;
+    public static Encoder exhaustEncoder;
 
     // Climber
     public static TalonSRX climbTalon1;
@@ -51,6 +53,7 @@ public class RobotMap {
         talonBackRight = new CANTalon(4);
         LiveWindow.addActuator("Drive Control", "Back Right Drive Talon" , talonBackRight);
 
+        /*
         // Shooter
         shooterTopTalon = new CANTalon(1);
         shooterTopTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -74,10 +77,11 @@ public class RobotMap {
         shooterBottomTalon.setCloseLoopRampRate(48);
         shooterBottomTalon.enableControl();
         LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
+        */
 
-        // Intake
-        intakeTalon = new TalonSRX(0);
-        LiveWindow.addActuator("Intake", "Intake Talon", intakeTalon);
+        // Exhaust
+        exhaustTalon = new TalonSRX(0);
+        LiveWindow.addActuator("Exhaust", "Exhaust Talon", exhaustTalon);
 
         // Climber
         climbTalon1 = new TalonSRX(1);
@@ -96,9 +100,9 @@ public class RobotMap {
         driveControlRightEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
         LiveWindow.addSensor("Drive Control", "Right Drive Encoder", driveControlRightEncoder);
 
-        //Intake
-        intakeEncoder = new Encoder(4, 5);
-        LiveWindow.addSensor("Intake", "Intake Encoder", intakeEncoder);
+        //Exhaust
+        exhaustEncoder = new Encoder(4, 5);
+        LiveWindow.addSensor("Exhaust", "Exhaust Encoder", exhaustEncoder);
 
         // Gyro
         digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);

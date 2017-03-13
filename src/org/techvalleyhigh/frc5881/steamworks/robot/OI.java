@@ -3,8 +3,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.techvalleyhigh.frc5881.steamworks.robot.commands.Intake;
-import org.techvalleyhigh.frc5881.steamworks.robot.commands.Shoot;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Exhaust;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
 
 //TODO: Comment Here
@@ -92,14 +91,10 @@ public class OI {
         backButton = new JoystickButton(xboxController, BUTTON_BACK);
         startButton = new JoystickButton(xboxController, BUTTON_START);
 
-        //A toggles intake
-        aButton.toggleWhenPressed(new Intake());
+        //left bumper toggles exhaust
+        leftBumper.whenPressed(new Exhaust());
 
-        //Right Bumper toggles shooter
-
-        rightBumper.toggleWhenPressed(new Shoot());
-
-        // Y when pressed climber
-        yButton.whileHeld(new Climb());
+        //Right Bumper toggles Climber
+        rightBumper.whenPressed(new Climb());
     }
 }

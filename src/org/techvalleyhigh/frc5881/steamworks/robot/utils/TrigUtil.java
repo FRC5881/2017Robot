@@ -1,7 +1,7 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.utils;
 
 /**
- * Created by ksharpe on 2/11/2017.
+ * Created by Cmahoney on 2/11/2017.
  */
 public class TrigUtil {
 
@@ -68,7 +68,7 @@ public class TrigUtil {
     public static double findAngleToTurnToLineUpWithGear(double deadZone, double distanceGiven, double angleGiven, double cameraDisplacementX, double cameraDisplacementY) {
         /* Creates a vector using distanceGiven as the mangitude and angleGiven as the angle,
          * from this vector we then subtract the camera displacement vector
-         * subtract the deadzone from the y-axis magnitude of this new vector
+         * subtract the dead zone from the y-axis magnitude of this new vector
          * and return the angle of the final vector and vertical
          */
 

@@ -17,7 +17,7 @@ public class Shoot extends Command {
 
     @Override
     protected void execute() {
-        Robot.shooter.spinToScore();
+        //Robot.shooter.spinToScore();
     }
 
     @Override
@@ -28,7 +28,8 @@ public class Shoot extends Command {
 
     @Override
     protected void initialize() {
-        super.initialize();
+
+        //super.initialize();
     }
 
     @Override
@@ -38,6 +39,6 @@ public class Shoot extends Command {
 
     @Override
     protected void end() {
-        Robot.shooter.spinStop();
+        //Robot.shooter.spinStop();
     }
 }

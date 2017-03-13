@@ -22,7 +22,6 @@ public class Climb extends Command {
         RobotMap.climbTalon2.set(-1);
     }
 
-
     @Override
     protected void interrupted() {
         super.interrupted();

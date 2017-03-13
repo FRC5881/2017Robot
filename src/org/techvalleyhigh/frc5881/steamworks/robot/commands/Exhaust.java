@@ -1,24 +1,23 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
-import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import org.techvalleyhigh.frc5881.steamworks.robot.*;
 
 /**
  * Created by CMahoney on 2/15/2017.
  */
-public class Intake extends Command {
-    public Intake() {
+public class Exhaust extends Command {
+    public Exhaust() {
         super();
     }
 
-    public Intake(String name) {
+    public Exhaust(String name) {
         super(name);
     }
 
     @Override
     protected void execute() {
-        RobotMap.intakeTalon.set(-1);
+        RobotMap.exhaustTalon.set(-1);
     }
 
     @Override
@@ -39,6 +38,6 @@ public class Intake extends Command {
 
     @Override
     protected void end() {
-        RobotMap.intakeTalon.set(0);
+        RobotMap.exhaustTalon.set(0);
     }
 }
