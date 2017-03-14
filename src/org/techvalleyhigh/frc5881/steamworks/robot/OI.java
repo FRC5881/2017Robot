@@ -95,6 +95,6 @@ public class OI {
         leftBumper.whenPressed(new Exhaust());
 
         //Right Bumper toggles Climber
-        rightBumper.whenPressed(new Climb());
+        rightBumper.whileHeld(new Climb());
     }
 }

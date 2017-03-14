@@ -19,7 +19,7 @@ public class Climb extends Command {
     @Override
     protected void execute() {
         RobotMap.climbTalon1.set(1);
-        RobotMap.climbTalon2.set(-1);
+        RobotMap.climbTalon2.set(1);
     }
 
     @Override

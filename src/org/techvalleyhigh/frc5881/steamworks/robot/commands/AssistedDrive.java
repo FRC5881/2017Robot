@@ -74,7 +74,7 @@ public class AssistedDrive extends Command {
         rightDrivePIDController.setOutputRange(-1 * drivePower, drivePower);
 
         // Set the distance to travel in inches, left is negative
-        leftDrivePIDController.setSetpoint(12 * distanceInFeet * -1);
+        leftDrivePIDController.setSetpoint(12 * distanceInFeet);
         rightDrivePIDController.setSetpoint(12 * distanceInFeet);
 
         // Set a 1" tolerance
@@ -107,7 +107,7 @@ public class AssistedDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        //driveControl.rawDrive(rightDrivePIDOutput, -1 * gyroPIDOutput);
+        driveControl.rawDrive(-1 * rightDrivePIDOutput, gyroPIDOutput);
 
         SmartDashboard.putNumber("Gyro PID Output", gyroPIDOutput);
         SmartDashboard.putNumber("Left PID Output", leftDrivePIDOutput);
@@ -121,6 +121,7 @@ public class AssistedDrive extends Command {
 
         SmartDashboard.putNumber("Left Error", leftDrivePIDController.getError());
         SmartDashboard.putNumber("Right Error", rightDrivePIDController.getError());
+        SmartDashboard.putNumber("Gyro Error", gyroPID.getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -86,6 +86,18 @@ public class DriveControl extends Subsystem {
         init();
     }
 
+    /**
+     * Command the drive motors to move and turn without correcting for deadzone or scaling.
+     * Joystick input should NOT be fed thru this function.
+     *
+     * @param move Motor amount to move from -1 to 1
+     * @param turn Motor amount to turn from -1 to 1
+     */
+    public void rawDrive(double move, double turn) {
+        updateDashboard();
+        robotDrive.arcadeDrive(move, turn, true);
+    }
+
     public void stopDrive() {
         talonBackLeft.set(0);
         talonBackRight.set(0);
@@ -137,6 +149,9 @@ public class DriveControl extends Subsystem {
         robotDrive = new RobotDrive(talonFrontLeft, talonBackLeft, talonFrontRight, talonBackRight);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+
     }
 
     //Getters for PID
