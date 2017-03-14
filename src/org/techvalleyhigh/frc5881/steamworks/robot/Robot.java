@@ -56,7 +56,6 @@ public class Robot extends IterativeRobot {
 
         //networktables access keys
 
-        // TODO: Need to set some parameters for autonomous. Are we aiming for center or L/R pegs, is boiler behind, left, right, or opposite side?
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
         autoChooser.addObject("Gear Boiler", new AutonomousCommand("Gear Center"));

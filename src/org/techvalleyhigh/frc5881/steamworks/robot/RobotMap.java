@@ -29,8 +29,8 @@ public class RobotMap {
     public static Encoder exhaustEncoder;
 
     // Climber
-    public static TalonSRX climbTalon1;
-    public static TalonSRX climbTalon2;
+    public static CANTalon climbTalon1;
+    public static CANTalon climbTalon2;
 
     //Drive Control
     public static RobotDrive robotDrive;
@@ -44,13 +44,13 @@ public class RobotMap {
         // Talons First
 
         // Tank drive
-        talonFrontLeft = new CANTalon(5);
+        talonFrontLeft = new CANTalon(4);
         LiveWindow.addActuator("Drive Control", "Front Left Drive Talon", talonFrontLeft);
-        talonBackLeft = new CANTalon(6);
+        talonBackLeft = new CANTalon(5);
         LiveWindow.addActuator("Drive Control", "Back Left Drive Talon", talonBackLeft);
-        talonFrontRight = new CANTalon(3);
+        talonFrontRight = new CANTalon(2);
         LiveWindow.addActuator("Drive Control", "Front Right Drive Talon", talonFrontRight);
-        talonBackRight = new CANTalon(4);
+        talonBackRight = new CANTalon(3);
         LiveWindow.addActuator("Drive Control", "Back Right Drive Talon" , talonBackRight);
 
         /*
@@ -84,9 +84,9 @@ public class RobotMap {
         LiveWindow.addActuator("Exhaust", "Exhaust Talon", exhaustTalon);
 
         // Climber
-        climbTalon1 = new TalonSRX(1);
+        climbTalon1 = new CANTalon(1);
         LiveWindow.addActuator("Climber", "Climber 1", climbTalon1);
-        climbTalon2 = new TalonSRX(2);
+        climbTalon2 = new CANTalon(6);
         LiveWindow.addActuator("Climber", "Climber 2", climbTalon2);
 
         // Encoders
