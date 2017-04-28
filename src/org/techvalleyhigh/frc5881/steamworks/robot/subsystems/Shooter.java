@@ -137,6 +137,12 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("BottomShooterSpeed", RobotMap.shooterBottomTalon.getSpeed());
     */}
 
+
+    public void shoot() {
+
+    
+        //setMotorSpeed
+    }
     public void spinStop() {
         //RobotMap.shooterBottomTalon.set(0);
         //RobotMap.shooterTopTalon.set(0);

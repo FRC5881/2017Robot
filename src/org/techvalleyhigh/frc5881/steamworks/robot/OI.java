@@ -16,12 +16,12 @@ public class OI {
     public JoystickButton aButton;
 
     /**
-     * b button is not being used as of 2/19
+     * b button is increase speed of shooter
      */
     public JoystickButton bButton;
 
     /**
-     * x button is not being used as of 2/19
+     * x button is decrease speed of shooter
      */
     public JoystickButton xButton;
 
