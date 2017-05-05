@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Exhaust;
 import org.techvalleyhigh.frc5881.steamworks.robot.commands.Climb;
+import org.techvalleyhigh.frc5881.steamworks.robot.commands.Shoot;
+import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Shooter;
 
 //TODO: Comment Here
 public class OI {
@@ -92,7 +94,7 @@ public class OI {
         startButton = new JoystickButton(xboxController, BUTTON_START);
 
         //left bumper toggles exhaust
-        leftBumper.whenPressed(new Exhaust());
+        leftBumper.whenPressed(new Shoot());
 
         //Right Bumper toggles Climber
         rightBumper.whileHeld(new Climb());

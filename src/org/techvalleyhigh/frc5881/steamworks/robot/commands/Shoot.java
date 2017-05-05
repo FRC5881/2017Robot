@@ -2,6 +2,7 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
+import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
 /**
  * Created by CMahoney on 2/15/2017.
@@ -17,7 +18,7 @@ public class Shoot extends Command {
 
     @Override
     protected void execute() {
-        //Robot.shooter.spinToScore();
+        RobotMap.shooterTopTalon.setPID(1, 0, 0);
     }
 
     @Override

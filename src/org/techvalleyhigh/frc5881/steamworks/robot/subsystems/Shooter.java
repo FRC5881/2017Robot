@@ -47,6 +47,7 @@ public class Shooter extends Subsystem {
     /**
      * Initialize shooter SmartDashboard values
      */
+    /*
     private void initSmartDashboard() {
         SmartDashboard.putNumber(MAX_SHOOTER_DISTANCE, 10);
         SmartDashboard.putNumber(MIN_SHOOTER_DISTANCE, 10);
@@ -57,7 +58,7 @@ public class Shooter extends Subsystem {
 
     // TODO: Velocity PID
 
-    /**
+
      * Given a distance and angle difference outputs true or false on wether
      * or not the robot is "clear" to shoot based on min and max distance and
      * angle tolerance
@@ -65,6 +66,7 @@ public class Shooter extends Subsystem {
      * @param angleDifference Absolute angle difference to the goal
      * @return true or false
      */
+    /*
     public boolean readyToShootPosition(double distance, double angleDifference) {
        return    (distance < SmartDashboard.getNumber(MAX_SHOOTER_DISTANCE, 10)
                && distance > SmartDashboard.getNumber(MIN_SHOOTER_DISTANCE, 10)
@@ -76,7 +78,8 @@ public class Shooter extends Subsystem {
      * @param currentRPM Current Rotations Per Minute
      * @param requiredRPM Required Rotations Per Minute
      * @return boolean
-     */
+
+
     public boolean readyToShootBottomMotor(double currentRPM, double requiredRPM) {
         return (Math.abs(currentRPM - requiredRPM) < SmartDashboard.getNumber(RPM_TOLERANCE, 50));
     }
@@ -98,6 +101,7 @@ public class Shooter extends Subsystem {
     /**
      * Spins the motors to score
      */
+    /*
     public void spinToScore() {
         //Call vision to find distance and angle difference
         //Call rpmToScore to rpm required
@@ -135,21 +139,11 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("TopShooterSpeed", RobotMap.shooterTopTalon.getSpeed());
         SmartDashboard.putNumber("BottomShooterVoltage", RobotMap.shooterBottomTalon.getOutputVoltage()/RobotMap.shooterBottomTalon.getBusVoltage());
         SmartDashboard.putNumber("BottomShooterSpeed", RobotMap.shooterBottomTalon.getSpeed());
-    */}
-
-
-    public void shoot() {
-
-    
-        //setMotorSpeed
-    }
-    public void spinStop() {
-        //RobotMap.shooterBottomTalon.set(0);
-        //RobotMap.shooterTopTalon.set(0);
-    }
-
+    */
+        
     @Override
     protected void initDefaultCommand() {
 
     }
+
 }
