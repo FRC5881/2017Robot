@@ -20,8 +20,8 @@ public class RobotMap {
 
 
     //Talons for the shooter
-    public static CANTalon shooterBottomTalon;
-    public static CANTalon shooterTopTalon;
+
+    public static CANTalon shooterTalon;
 
 
     //Exhaust
@@ -55,28 +55,18 @@ public class RobotMap {
 
 
         // Shooter
-        shooterTopTalon = new CANTalon(1);
-        shooterTopTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        shooterTopTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-        shooterTopTalon.reverseSensor(false);
-        shooterTopTalon.configNominalOutputVoltage(0f, 0f);
-        shooterTopTalon.configPeakOutputVoltage(12f, -12f);
-        shooterTopTalon.setProfile(0);
-        shooterTopTalon.setPID(1, 0, 0);
-        shooterTopTalon.setCloseLoopRampRate(48);
-        shooterTopTalon.enableControl();
-        LiveWindow.addActuator("Shooter", "Top Talon", shooterTopTalon);
-        shooterBottomTalon = new CANTalon(2);
-        shooterBottomTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        shooterBottomTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-        shooterBottomTalon.reverseSensor(true);
-        shooterBottomTalon.configNominalOutputVoltage(0f, 0f);
-        shooterBottomTalon.configPeakOutputVoltage(12f, -12f);
-        shooterBottomTalon.setProfile(0);
-        shooterBottomTalon.setPID(1, 0, 0);
-        shooterBottomTalon.setCloseLoopRampRate(48);
-        shooterBottomTalon.enableControl();
-        LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
+        shooterTalon = new CANTalon(1);
+        shooterTalon.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+        shooterTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+        shooterTalon.reverseSensor(false);
+        shooterTalon.configNominalOutputVoltage(0f, 0f);
+        shooterTalon.configPeakOutputVoltage(12f, -12f);
+        shooterTalon.setProfile(0);
+        shooterTalon.setPID(1, 0, 0);
+        shooterTalon.setCloseLoopRampRate(48);
+        shooterTalon.enableControl();
+        LiveWindow.addActuator("Shooter", "Talon", shooterTalon);
+
 
 
         // Exhaust
