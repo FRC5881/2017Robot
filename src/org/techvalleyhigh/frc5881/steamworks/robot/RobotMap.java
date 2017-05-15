@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 // TODO Need Javadoc comment
 public class RobotMap {
 
+
+
     //Gyro
     public static ADXRS450_Gyro digitalGyro;
 
@@ -20,9 +22,10 @@ public class RobotMap {
 
 
     //Talons for the shooter
-
     public static CANTalon shooterTalon;
 
+    //Talons for ball agitator
+    public static CANTalon agitatorTalon;
 
     //Exhaust
     public static TalonSRX exhaustTalon;
@@ -66,6 +69,12 @@ public class RobotMap {
         shooterTalon.setCloseLoopRampRate(48);
         shooterTalon.enableControl();
         LiveWindow.addActuator("Shooter", "Talon", shooterTalon);
+
+
+        // Agitator
+        agitatorTalon = new CANTalon(8);
+        LiveWindow.addActuator("Agitator", "Talon", agitatorTalon);
+
 
 
 
