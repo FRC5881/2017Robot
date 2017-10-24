@@ -98,6 +98,15 @@ public class DriveControl extends Subsystem {
         robotDrive.arcadeDrive(move, turn, true);
     }
 
+    /**
+     * Command the drive motors to move speeds you give them
+     * @param left amount left motors to move -1 to 1
+     * @param right amount right motors to move
+     */
+    public void manualDrive(double left, double right) {
+
+    }
+
     public void stopDrive() {
         talonBackLeft.set(0);
         talonBackRight.set(0);

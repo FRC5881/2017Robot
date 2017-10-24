@@ -72,6 +72,7 @@ public class PegUtil {
     /**
      * gets the distance to the gear target based on the area, the formula takes area to the -0.467th power and multiplies
      * it by 1587.3
+     * Forumla was found with some statistical analyzes in the from of a power regression
      * @param area
      * @return
      */

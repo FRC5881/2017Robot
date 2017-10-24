@@ -12,8 +12,6 @@ import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
  * Created by CMahoney on 2/13/2017.
  */
 public class AssistedDrive extends Command {
-    //TODO assisted driving and turning
-
     private double distanceInFeet;
     private double relativeBearing;
 
@@ -98,7 +96,6 @@ public class AssistedDrive extends Command {
         gyroPID.enable();
 
         // Debugging output very helpful. DS needs a console setting change to see it.
-
        System.out.println("Assisted Drive Leg - " + distanceInFeet + "ft at power " + drivePower
         + " bearing " + relativeBearing + " rel deg " + absBearing);
 
