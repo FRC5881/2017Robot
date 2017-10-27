@@ -59,12 +59,7 @@ public class AssistedDrive extends Command {
                 output -> leftDrivePIDOutput = output);
         rightDrivePIDController = new PIDController(driveControl.getRightPIDKp(), driveControl.getRightPIDKi(),
                 driveControl.getRightPIDKd(), RobotMap.driveControlRightEncoder,
-                new PIDOutput() {
-                    @Override
-                    public void pidWrite(double output) {
-                        rightDrivePIDOutput = output;
-                    }
-                });
+                output -> rightDrivePIDOutput = output);
 
 
         // Limit the PID output range to valid motor control values

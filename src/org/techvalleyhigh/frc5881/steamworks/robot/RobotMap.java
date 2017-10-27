@@ -18,11 +18,9 @@ public class RobotMap {
     public static Encoder driveControlRightEncoder;
     public static Encoder driveControlLeftEncoder;
 
-
     //Talons for the shooter
     public static CANTalon shooterBottomTalon;
     public static CANTalon shooterTopTalon;
-
 
     //Exhaust
     public static TalonSRX exhaustTalon;
@@ -77,7 +75,6 @@ public class RobotMap {
         shooterBottomTalon.setCloseLoopRampRate(48);
         shooterBottomTalon.enableControl();
         LiveWindow.addActuator("Shooter", "Bottom Talon", shooterBottomTalon);
-
 
         // Exhaust
         exhaustTalon = new TalonSRX(0);

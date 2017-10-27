@@ -103,8 +103,9 @@ public class DriveControl extends Subsystem {
      * @param left amount left motors to move -1 to 1
      * @param right amount right motors to move
      */
-    public void manualDrive(double left, double right) {
-
+    public void tankDrive(double left, double right) {
+        updateDashboard();
+        robotDrive.tankDrive(left, right, true);
     }
 
     public void stopDrive() {
