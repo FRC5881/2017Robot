@@ -1,4 +1,4 @@
-package org.techvalleyhigh.frc5881.steamworks.robot.utils;
+package org.techvalleyhigh.frc5881.steamworks.robot.utils.vision;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -7,27 +7,15 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * Created by ksharpe on 2/19/2017.
+ * Created by CMahoney on 3/3/2017.
+ *
+ * This class calculates and store and deal with vision data for the boiler in autonomous or teleop, it validates
+ * the targets and runs calculations to find the angle and distance needed to go to the target.
+ * AND returns RPM required to score using physics
  */
-public class PegUtil {
-    /**
-     * this class contains the calculations that deal with vision for the gearPeg in autonomous or teleop, it validates
-     * the targets and runs calculations to find the angle and distance needed to go to the target.
-     */
-    private static double horizontalQuality = 640;
-
-    /**
-     * Vertical Quality of the image
-     */
-    private static double verticalQuality = 480;
-
-    /**
-     * Horizontal Field of View of the camera
-     */
-    private static double horizontalFieldOfViewDegrees = 50.4;
-
+public class BoilerUtil {
     /*
-     * made arrays as arrayLists to be able to use the .remove method later on
+     * Make arrays as arrayLists to be able to use the .remove method later on
      */
     private ArrayList<Double> areas = new ArrayList<>();
     private ArrayList<Double> centerX = new ArrayList<>();
@@ -36,48 +24,55 @@ public class PegUtil {
     private ArrayList<Double> heights = new ArrayList<>();
 
     /**
-     *created arrays that work with NetworkTables
-     * @param contours
+     * Holds vision camera data
      */
-    public PegUtil(NetworkTable contours) {
+    private VisionCamera camera;
+
+    //Distance and angle data
+    public double distanceToBoiler;
+    public double angleToBoiler;
+
+    public BoilerUtil(NetworkTable contours, VisionCamera camera) {
+        //Set Network Table contours
         areas.addAll(Arrays
                 .stream(contours.getNumberArray("areas", new double[] {}))
                 .boxed()
                 .collect(Collectors.toList()));
-
         centerX.addAll(Arrays
                 .stream(contours.getNumberArray("centerX", new double[] {}))
                 .boxed()
                 .collect(Collectors.toList()));
-
         centerY.addAll(Arrays
                 .stream(contours.getNumberArray("centerY", new double[] {}))
                 .boxed()
                 .collect(Collectors.toList()));
-
         widths.addAll(Arrays
                 .stream(contours.getNumberArray("width", new double[] {}))
                 .boxed()
                 .collect(Collectors.toList()));
-
-
         heights.addAll(Arrays
                 .stream(contours.getNumberArray("height", new double[] {}))
                 .boxed()
                 .collect(Collectors.toList()));
-
         validContourIndexes();
+
+        //Holds the camera
+        this.camera = camera;
+
+        //Store distance and angle values
+        this.distanceToBoiler = this.findDistanceToBoiler();
+        this.angleToBoiler = this.findAngleToBoiler();
     }
 
     /**
-     * gets the distance to the gear target based on the area, the formula takes area to the -0.467th power and multiplies
-     * it by 1587.3
-     * Forumla was found with some statistical analyzes in the from of a power regression
+     * gets the distance to the gear target based on the area
+     * the formula takes the sum of the areas and then puts them into this function
+     * distance = 4398.71e^(0.001(area))
      * @param area
      * @return
      */
     private double getDistanceBasedOnArea(double area) {
-        return 1587.3 * Math.pow(area, -0.467);
+        return 4398.71 * Math.pow(Math.E, 0.001 * area);
     }
 
     /**
@@ -86,16 +81,10 @@ public class PegUtil {
      * takes average and runs through getDistanceBasedOnArea function, returns value
      * @return -1 which indicates an error
      */
-    public double findDistanceToPeg() {
-        // Is there 0, 1, 2, or more valid contours...
-        // 0 == bail, >2 == bail
-        // 1 = return the one
-        // 2 = average them
-
-        if (areas.size() == 1) {
-            return getDistanceBasedOnArea(areas.get(0));
-        } else if(areas.size() == 2) {
-            return getDistanceBasedOnArea((areas.get(0) + areas.get(1)) / 2);
+    public double findDistanceToBoiler() {
+        //If there is not two areas, something terrible has happened
+        if(areas.size() == 2) {
+            return getDistanceBasedOnArea(areas.get(0) + areas.get(1));
         } else {
             return -1;
         }
@@ -109,8 +98,8 @@ public class PegUtil {
      */
     public double getAngleBasedOnCenterX(double centerX) {
 
-        double fieldOfViewPerPixel = horizontalFieldOfViewDegrees / horizontalQuality;
-        double centerOfView = horizontalQuality / 2;
+        double fieldOfViewPerPixel = camera.horizontalFieldOfViewDegrees / camera.horizontalQuality;
+        double centerOfView =  camera.horizontalQuality / 2;
 
         double distanceFromCenterOfView = centerX - centerOfView;
 
@@ -123,10 +112,9 @@ public class PegUtil {
      * @return double containing the angle to the peg, or if only one contour was found, angle to it's center.
      *         Returns Double.MIN_VALUE if an error occurs. (Eg. no contours, or more than 2 contours)
      */
-    public double findAngleToPeg() {
-        if (centerX.size() == 1) {
-            return getAngleBasedOnCenterX(centerX.get(0));
-        } else if (centerX.size() == 2) {
+    public double findAngleToBoiler() {
+        //If there is not two centers, something terrible has happened
+        if (centerX.size() == 2) {
             return getAngleBasedOnCenterX(centerX.get(0) + centerX.get(1) / 2);
         } else {
             return Double.MIN_VALUE;
@@ -134,28 +122,27 @@ public class PegUtil {
     }
 
     /**
-     * Returns true or false on weather or not we are centered with the gear
+     * Returns true of false if the bot is centered with the boiler +/- given tolerance
+     * @param tolerance
      * @return
      */
-    private boolean isCenteredOnGear() {
-        return (findAngleToPeg() < 10);
+    private boolean isCenteredOnGear(double tolerance) {
+        return (Math.abs(findAngleToBoiler()) < tolerance);
     }
 
-   /**
-    * makes sure the contours are good or not, if they aren't then
-    * it will remove them from the arrayList
-    */
+    /**
+     * makes sure the contours are good or not, if they aren't then
+     * it will remove them from the arrayList
+     */
     public void validContourIndexes() {
-        // Change this to remove invalid contours from all the double[] arrays
-
-        for (int i = heights.size(); i > 0; i--) {
+        for(int i = widths.size(); i > 0; i--) {
             double width = widths.get(i);
             double height = heights.get(i);
+            double ratio = width / height;
 
-            // Do math - does ratio of w/h match expected w/in margin of error
-            // Ratio of tested values has a range of 0.43 < x < 0.45
-            // (Room for error)
-            if (!(width / height >= 0.41 && width / height <= 0.47)) {
+            // Check Ratios there's two different possible ranges (one piece of tape is wider)
+            // With a little bit of wiggle room these are the tested values
+            if(!((ratio > 1.75 && ratio < 2.5) || (ratio > 2.75 && ratio < 4.25))) {
                 // Remove from each array
                 widths.remove(i);
                 heights.remove(i);

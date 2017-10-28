@@ -15,6 +15,9 @@ import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 import static org.techvalleyhigh.frc5881.steamworks.robot.RobotMap.*;
 
 public class DriveControl extends Subsystem {
+    /**
+     * String used for SmartDashboard key for autonomous gyro tolerance
+     */
     private static final String AUTO_GYRO_TOLERANCE = "Auto Gyro Tolerance (+- Deg)";
 
     /**
@@ -87,41 +90,12 @@ public class DriveControl extends Subsystem {
     }
 
     /**
-     * Command the drive motors to move and turn without correcting for deadzone or scaling.
-     * Joystick input should NOT be fed thru this function.
-     *
-     * @param move Motor amount to move from -1 to 1
-     * @param turn Motor amount to turn from -1 to 1
-     */
-    public void rawDrive(double move, double turn) {
-        updateDashboard();
-        robotDrive.arcadeDrive(move, turn, true);
-    }
-
-    /**
-     * Command the drive motors to move speeds you give them
-     * @param left amount left motors to move -1 to 1
-     * @param right amount right motors to move
-     */
-    public void tankDrive(double left, double right) {
-        updateDashboard();
-        robotDrive.tankDrive(left,right);
-    }
-
-    public void stopDrive() {
-        talonBackLeft.set(0);
-        talonBackRight.set(0);
-        talonFrontLeft.set(0);
-        RobotMap.talonFrontRight.set(0);
-    }
-
-    /**
      * Initialize the SmartDashboard and other local variables.
      */
     private void init() {
         calibrateGyro();
 
-        // Gryo tolerance - used in auto to provide non-perfect directions
+        // Gyro tolerance - used in auto to provide non-perfect directions
         SmartDashboard.putNumber(AUTO_GYRO_TOLERANCE, 5);
         SmartDashboard.putNumber(JOYSTICK_DEADZONE_Y, 0.1);
 
@@ -129,7 +103,7 @@ public class DriveControl extends Subsystem {
         SmartDashboard.putNumber(ARCADE_X_AXIS_SENSITIVITY, 1);
         SmartDashboard.putNumber(ARCADE_Y_AXIS_SENSITIVITY, 1);
 
-        // TODO Comment This
+        //When in test mode control motors by percentage power -1 -> 1
         talonFrontLeft.changeControlMode(TalonControlMode.PercentVbus);
         talonBackLeft.changeControlMode((TalonControlMode.PercentVbus));
         RobotMap.talonFrontRight.changeControlMode((TalonControlMode.PercentVbus));
@@ -162,6 +136,48 @@ public class DriveControl extends Subsystem {
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         robotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 
+    }
+
+    /**
+     * Command the drive motors to move and turn without correcting for deadzone or scaling.
+     * Joystick input should NOT be fed thru this function.
+     *
+     * @param move Motor amount to move from -1 to 1
+     * @param turn Motor amount to turn from -1 to 1
+     */
+    public void rawDrive(double move, double turn) {
+        updateDashboard();
+        robotDrive.arcadeDrive(move, turn, true);
+    }
+
+    /**
+     * Command the drive motors to move speeds you give them
+     * @param left amount left motors to move -1 to 1
+     * @param right amount right motors to move
+     */
+    public void tankDrive(double left, double right) {
+        updateDashboard();
+        robotDrive.tankDrive(left,right);
+    }
+
+    /**
+     * Stop all the drive motors
+     */
+    public void stopDrive() {
+        talonBackLeft.set(0);
+        talonBackRight.set(0);
+        talonFrontLeft.set(0);
+        talonFrontRight.set(0);
+    }
+
+    /**
+     * Get Joy Stick values and send to arcade drive
+     */
+    public void takeJoystickInputs() {
+        double y = Robot.oi.xboxController.getRawAxis(OI.LeftYAxis);
+        double x = Robot.oi.xboxController.getRawAxis(OI.RightXAxis);
+
+        robotDrive.arcadeDrive(y, x, true);
     }
 
     //Getters for PID
@@ -253,16 +269,5 @@ public class DriveControl extends Subsystem {
      */
     private void updateDashboard() {
         SmartDashboard.putNumber("Gyro Heading", getGyroAngle());
-
-    }
-
-    /**
-     * Getting Joy Stick values
-     */
-    public void takeJoystickInputs() {
-        double y = Robot.oi.xboxController.getRawAxis(OI.LeftYAxis);
-        double x = Robot.oi.xboxController.getRawAxis(OI.RightXAxis);
-
-        robotDrive.arcadeDrive(y, x, true);
     }
 }

@@ -1,42 +1,22 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.PegUtil;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.vision.PegUtil;
 import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 /**
  * Created by ksharpe on 2/2/2017.
  */
+//TODO: Organize this mess better
 public class AutonomousCommand extends CommandGroup {
-    private static int deadZone = 40;
-    private static double pegCameraDisplacementX = 0;
-    private static double pegCameraDisplacementY = 0;
-
     @Override
     protected boolean isFinished() {
         return false;
     }
 
-    // if boiler on opposite side as robot. robot backs up 50 inches and turns 50 degrees either pos or neg depending on side
-    // if boiler on same side as robot. robot backs up about 20 inches
-    // if starting in the middle. robot backs up about 20 inches and turns 90 degrees either pos or neg depending on boiler's side
     public AutonomousCommand CommandGroup;
-
-    // TODO: Autonomous Plan
-    // once centered. How far away is the robot to the object? does it need to go 5ft, 10 ft, 2ft, 20ft?
-    // WAIT!!!
-    // the robot needs to wait long enough for the person to pull up the lever with the gear on it
-    // Drive to position/Align
-    // where is the robot compared to the tape? Left, right, or centered?
-    // if left what angle to the right does the robot need to go?
-    // if right what angle to the left does the robot need to go?
-    // push in
-    // back up
-    // turn to boiler
-    // fire fuel
 
     PegUtil pegSnapShot;
 
@@ -45,33 +25,15 @@ public class AutonomousCommand extends CommandGroup {
      */
     private void scoreGear() {
         //Save a snapshot into memory
-        this.pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
-
-        // Find peg
-        double distanceToPeg = this.pegSnapShot.findDistanceToPeg();
-        double angleToPeg = this.pegSnapShot.findAngleToPeg();
-
-        // Calculate distance and degrees to turn (accounting for camera displacement)
-        double distanceToDrive = TrigUtil.findDistanceToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
-        double degreesToTurn = TrigUtil.findAngleToTurnToLineUpWithGear(deadZone, distanceToPeg, angleToPeg, pegCameraDisplacementX, pegCameraDisplacementY);
-
-        // Turn Degrees
-        addSequential(new AssistedDrive(0, degreesToTurn < 2.5 ? 0 : degreesToTurn));
-
-        // Drive Distance
-        addSequential(new AssistedDrive(distanceToDrive / 12, 0));
-
-        // Turn -Degrees
-        addSequential(new AssistedDrive(0, -degreesToTurn));
-
-        // Take new snapshot
-        pegSnapShot = new PegUtil(NetworkTable.getTable("GRIP/myCountours"));
-
-        // Recalculate Degrees && Turn
-        addSequential(new AssistedDrive(0, pegSnapShot.findAngleToPeg() < 2.5 ? 0 : pegSnapShot.findAngleToPeg()));
-
-        // Recalculate Distance && Drive, if the bot is too close it will start getting wrong readings
-        addSequential(new AssistedDrive(pegSnapShot.findDistanceToPeg() / 12 < deadZone ? pegSnapShot.findDistanceToPeg() / 12 : deadZone, 0));
+        //Find peg
+        //Debug for testing
+        //Calculate distance and degrees to turn (accounting for camera displacement)
+        //Turn Degrees
+        //Drive Distance
+        //Turn -Degrees
+        //Take new snapshot
+        //Recalculate Degrees && Turn
+        //Recalculate Distance && Drive, if the bot is too close it will start getting wrong readings
     }
 
     public AutonomousCommand(String Autoroutine) {
@@ -128,6 +90,7 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new AssistedDrive(0, 90));
 
             } else if (Autoroutine == "Curve") {
+                //Test arc pathing
                 addSequential(new ArcPathing(36, 36, 0.65));
             }
         }

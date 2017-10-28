@@ -3,10 +3,10 @@ package org.techvalleyhigh.frc5881.steamworks.robot;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.techvalleyhigh.frc5881.steamworks.robot.utils.vision.VisionCamera;
 
 // TODO Need Javadoc comment
 public class RobotMap {
-
     //Gyro
     public static ADXRS450_Gyro digitalGyro;
 
@@ -33,10 +33,11 @@ public class RobotMap {
     //Drive Control
     public static RobotDrive robotDrive;
 
-    // Ultrasonic
+    //Ultrasonic
     public static AnalogInput ultrasonic;
 
-    // TODO: Define ultrasonic for testing
+    //Vision Camera
+    public static VisionCamera visionCamera;
 
     public static void init() {
         // Talons First
@@ -102,13 +103,20 @@ public class RobotMap {
         exhaustEncoder = new Encoder(4, 5);
         LiveWindow.addSensor("Exhaust", "Exhaust Encoder", exhaustEncoder);
 
-        // Gyro
+        //Gyro
         digitalGyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
         LiveWindow.addSensor("Drive Control", "DigitalGyro", digitalGyro);
 
-        // Ultrasonic
+        //Ultrasonic
         ultrasonic = new AnalogInput(0);
         LiveWindow.addSensor("Ultrasonic", "Ultrasonic", ultrasonic);
 
+        //Vision Camera(s) see Camera Util.png for displacement
+        //TODO: Find Vertical Field of View
+        visionCamera = new VisionCamera(
+                640, 480,
+                50.4, 100,
+                0,0
+        );
     }
 }

@@ -14,6 +14,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.commands.Drive;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Chassis;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
 import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Shooter;
+import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static DriveControl driveControl;
     //public static Shooter shooter;
+    public static Vision vision;
     public static Chassis chassis;
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
@@ -39,9 +41,14 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         RobotMap.init();
 
+        //Create Subsystems
         driveControl = new DriveControl();
         //shooter = new Shooter();
         chassis = new Chassis();
+
+        //Give vision the Vision cameras defined in robot map
+        vision = new Vision(RobotMap.visionCamera);
+
 
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be

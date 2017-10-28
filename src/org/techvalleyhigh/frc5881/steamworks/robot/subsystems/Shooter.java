@@ -16,6 +16,7 @@ import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
  * Created by CMahoney on 2/4/2017.
  */
 
+//TODO: Fix this scary mess if we get a shooter
 public class Shooter extends Subsystem {
 
     /**

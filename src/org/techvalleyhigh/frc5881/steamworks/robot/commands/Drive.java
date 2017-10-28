@@ -7,12 +7,8 @@ import org.techvalleyhigh.frc5881.steamworks.robot.Robot;
  * Drive command to take joystick input at a given scale and move the robot.
  */
 public class Drive extends Command {
-
     public Drive() {
-
-
         requires(Robot.driveControl);
-
     }
 
     // Called just before this Command runs the first time
