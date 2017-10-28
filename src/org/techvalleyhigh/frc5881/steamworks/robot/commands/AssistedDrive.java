@@ -61,7 +61,6 @@ public class AssistedDrive extends Command {
                 driveControl.getRightPIDKd(), RobotMap.driveControlRightEncoder,
                 output -> rightDrivePIDOutput = output);
 
-
         // Limit the PID output range to valid motor control values
         leftDrivePIDController.setOutputRange(-1 * drivePower, drivePower);
         rightDrivePIDController.setOutputRange(-1 * drivePower, drivePower);

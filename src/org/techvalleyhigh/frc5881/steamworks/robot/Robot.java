@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Position 2 & right", new AutonomousCommand("pos2-r"));
         autoChooser.addObject("Position 3 & behind", new AutonomousCommand("pos3-b"));
         autoChooser.addObject("Position 3 & opposite", new AutonomousCommand("pos3-o"));
+        autoChooser.addObject("Curve", new AutonomousCommand("Curve"));
 
         SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
 

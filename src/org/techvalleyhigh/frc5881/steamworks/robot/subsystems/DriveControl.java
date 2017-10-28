@@ -105,7 +105,7 @@ public class DriveControl extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         updateDashboard();
-        robotDrive.tankDrive(left, right, true);
+        robotDrive.tankDrive(left,right);
     }
 
     public void stopDrive() {

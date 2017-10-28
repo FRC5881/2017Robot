@@ -126,8 +126,9 @@ public class AutonomousCommand extends CommandGroup {
                 addSequential(new AssistedDrive(4.1667, 0));
                 // Turn clockwise 90 degrees
                 addSequential(new AssistedDrive(0, 90));
-            } else if (Autoroutine == "Cure") {
-                addSequential(new ArcPathing(36, 36, 0.25));
+
+            } else if (Autoroutine == "Curve") {
+                addSequential(new ArcPathing(36, 36, 0.65));
             }
         }
     }

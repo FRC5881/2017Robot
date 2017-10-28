@@ -76,10 +76,13 @@ public class ArcPathing extends Command {
         //Enable
         leftDrivePIDController.enable();
         rightDrivePIDController.enable();
+
+        System.out.println("Curve Pathing");
     }
 
     @Override
     protected void execute() {
+        System.out.println(rightDrivePIDOutput + " " + leftDrivePIDOutput);
         driveControl.tankDrive(rightDrivePIDOutput, leftDrivePIDOutput);
 
         SmartDashboard.putNumber("Left PID Output", leftDrivePIDOutput);
@@ -97,12 +100,17 @@ public class ArcPathing extends Command {
 
     @Override
     protected boolean isFinished() {
-        return rightDrivePIDController.onTarget() || leftDrivePIDController.onTarget();
+        System.out.println("Is Finshed?");
+        System.out.println(rightDrivePIDController.onTarget());
+        System.out.println(leftDrivePIDController.onTarget());
+
+        return false;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        System.out.println("END");
         leftDrivePIDController.disable();
         rightDrivePIDController.disable();
 
@@ -114,6 +122,7 @@ public class ArcPathing extends Command {
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+        System.out.println("Interrupted");
         end();
     }
 
@@ -134,15 +143,15 @@ public class ArcPathing extends Command {
         double r = Math.sin(alpha) * h / Math.cos(C);
         double d = C * r; //Arc length
 
-        double rightSide = 0;
-        double leftSide = 0;
+        double rightSide;
+        double leftSide;
 
         if(x > 0) {
-            rightSide = (r - this.botWidth / 2) / r;
-            leftSide = (r + this.botWidth / 2) / r;
+            rightSide = (r - botWidth / 2) / r;
+            leftSide = (r + botWidth / 2) / r;
         } else {
-            leftSide = (r - this.botWidth / 2) / r;
-            rightSide = (r + this.botWidth / 2) / r;
+            leftSide = (r - botWidth / 2) / r;
+            rightSide = (r + botWidth / 2) / r;
         }
 
         double[] out = {rightSide * d, leftSide * d};
