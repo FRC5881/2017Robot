@@ -30,16 +30,25 @@ public class ArcPathing extends Command {
      */
     public double speed ;
 
+    //Drive controller
     private DriveControl driveControl;
 
+    //PID controllers
     private PIDController leftDrivePIDController;
     private PIDController rightDrivePIDController;
 
+    //Starting PID outputs
     private double rightDrivePIDOutput, leftDrivePIDOutput = 0;
 
-    public ArcPathing(double x, double y, double speed) {
-        this.x = x;
-        this.y = y;
+    /**
+     *
+     * @param x Distance in feet
+     * @param y Distance in feet
+     * @param speed
+     */
+    ArcPathing(double x, double y, double speed) {
+        this.x = x * 12;
+        this.y = y * 12;
         this.speed = speed;
 
         requires(Robot.driveControl);
@@ -77,12 +86,13 @@ public class ArcPathing extends Command {
         leftDrivePIDController.enable();
         rightDrivePIDController.enable();
 
-        System.out.println("Curve Pathing");
+        System.out.println("New Curve Pathing Horizontal Distance " + x + " inches Forward Distance " + y);
+        System.out.println("Set point x " + setPoints[0] + " Set point y " + setPoints[1]);
     }
 
     @Override
     protected void execute() {
-        System.out.println(rightDrivePIDOutput + " " + leftDrivePIDOutput);
+        //System.out.println(rightDrivePIDOutput + " " + leftDrivePIDOutput);
         driveControl.tankDrive(rightDrivePIDOutput, leftDrivePIDOutput);
 
         SmartDashboard.putNumber("Left PID Output", leftDrivePIDOutput);
@@ -100,11 +110,11 @@ public class ArcPathing extends Command {
 
     @Override
     protected boolean isFinished() {
-        System.out.println("Is Finshed?");
-        System.out.println(rightDrivePIDController.onTarget());
-        System.out.println(leftDrivePIDController.onTarget());
+          System.out.println("Is Finshed?");
+          System.out.println(rightDrivePIDController.onTarget());
+          System.out.println(leftDrivePIDController.onTarget());
 
-        return false;
+        return rightDrivePIDController.onTarget();
     }
 
     // Called once after isFinished returns true
@@ -128,33 +138,38 @@ public class ArcPathing extends Command {
 
 
     /**
-     * Find the nessaccary percentages to send to near and far side motors (farSide will be greater than 100%)
-     * To turn an arc described by a right trianle x, y
+     * Find the necessary percentages to send to near and far side motors (farSide will be greater than 100%)
+     * To turn an arc described by a right triangle x, y
      * Then finds the this distances each set of wheels needs to travel.
      * If x is positive the robot turns towards the right, if x is negative the robot turns towards the left.
      * See Curve Path Math.png in root folder for geometry
      * @return [right side setpoint, left side setpoint]
      */
     private double[] findSetPoints() {
-        //Geometry
-        double h = Math.sqrt(this.x * this.x + this.y * this.y);
-        double alpha = Math.atan(this.y / this.x);
-        double C = Math.PI - 2 * alpha;
-        double r = Math.sin(alpha) * h / Math.cos(C);
-        double d = C * r; //Arc length
+        double rightSide, leftSide, r, d;
 
-        double rightSide;
-        double leftSide;
-
-        if(x > 0) {
-            rightSide = (r - botWidth / 2) / r;
-            leftSide = (r + botWidth / 2) / r;
+        if (x == y) {
+            r = x;
+            d = r * Math.PI / 2;
         } else {
-            leftSide = (r - botWidth / 2) / r;
-            rightSide = (r + botWidth / 2) / r;
+            //Geometry
+            double h = Math.sqrt(this.x * this.x + this.y * this.y);
+            System.out.println("h " + h);
+            double alpha = Math.atan(this.y / this.x);
+            System.out.println("Alpha " + alpha);
+            double C = Math.PI - (2 * alpha);
+            System.out.println("C " + C);
+            r = Math.abs(Math.sin(alpha) * h / Math.cos(C));
+            System.out.println("r " + r);
+            d = C * r; //Arc length
+            System.out.println("d " + d);
         }
+        rightSide = (r - (botWidth / 24)) / r;
+        leftSide = (r + (botWidth / 24)) / r;
 
-        double[] out = {rightSide * d, leftSide * d};
-        return out;
+        System.out.println(leftSide + " <---left , right--->" + rightSide);
+        System.out.println(leftSide * d + " <--- left, right ---> " + rightSide * d);
+
+        return new double[]{-rightSide * d, -leftSide * d};
     }
 }

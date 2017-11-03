@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
     public static Chassis chassis;
     public static Drive driveCommand;
     public static SendableChooser autoChooser;
-    Command autonomousCommand;
+    private Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -61,37 +61,24 @@ public class Robot extends IterativeRobot {
 
         driveCommand = new Drive();
 
-        //networktables access keys
-
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
-        autoChooser.addObject("Gear Boiler", new AutonomousCommand("Gear Center"));
-        autoChooser.addObject("Gear Not Boiler", new AutonomousCommand("Gear Not Boiler"));
-        autoChooser.addObject("Cross Baseline", new AutonomousCommand("Baseline"));
-        autoChooser.addObject("position 1 & behind", new AutonomousCommand("pos1-b"));
-        autoChooser.addObject("position 1 & opposite", new AutonomousCommand("pos1-o"));
-        autoChooser.addObject("Position 2 & left", new AutonomousCommand("pos2-l"));
-        autoChooser.addObject("Position 2 & right", new AutonomousCommand("pos2-r"));
-        autoChooser.addObject("Position 3 & behind", new AutonomousCommand("pos3-b"));
-        autoChooser.addObject("Position 3 & opposite", new AutonomousCommand("pos3-o"));
-        autoChooser.addObject("Curve", new AutonomousCommand("Curve"));
+        autoChooser.addObject("Score Peg", new AutonomousCommand("Right Peg"));
+        autoChooser.addObject("Test", new AutonomousCommand("Test"));
+        autoChooser.addObject("Baseline", new AutonomousCommand("Baseline"));
+
+        /**
+        autoChooser.addObject("Testing 6 6", new AutonomousCommand("Testing 6 6"));
+
+        for(int i = 0; i < 5; i++) {
+            for(int j = 0; j < 5; j++) {
+                autoChooser.addObject("Testing " + i + " " + j, "Testing " + i + " " + j);
+            }
+        }**/
 
         SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
 
         SmartDashboard.putData(Scheduler.getInstance());
-
-
-        //1. acquire target
-        //2. angle and distance
-        //3. go!
-        //4. backup
-        //5. left or right? backup more if needed
-        //6. shoot
-
-        //SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
-
-        //SmartDashboard.putData(Scheduler.getInstance());
-
 
         CameraServer.getInstance().startAutomaticCapture();
     }

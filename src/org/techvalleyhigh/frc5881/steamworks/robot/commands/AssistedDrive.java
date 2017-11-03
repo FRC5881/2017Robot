@@ -14,13 +14,13 @@ import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.DriveControl;
 public class AssistedDrive extends Command {
     private double distanceInFeet;
     private double relativeBearing;
+    private double speed;
 
     private DriveControl driveControl;
 
     private PIDController leftDrivePIDController;
     private PIDController rightDrivePIDController;
 
-    private static double drivePower = 0.5;
 
     /**
      * gyrpPID outputs a value that needs to be applied to the power of drive motors to adjust heading
@@ -32,13 +32,14 @@ public class AssistedDrive extends Command {
     private double rightDrivePIDOutput = 0;
     private double gyroPIDOutput = 0;
 
-    public AssistedDrive(double distanceInFeet, double relativeBearing) {
+    AssistedDrive(double distanceInFeet, double relativeBearing, double speed) {
 
         if(distanceInFeet == 0 && relativeBearing == 0) {
             return;
         }
         this.distanceInFeet = distanceInFeet;
         this.relativeBearing = relativeBearing;
+        this.speed = speed;
 
         requires(Robot.driveControl);
         driveControl = Robot.driveControl;
@@ -62,8 +63,8 @@ public class AssistedDrive extends Command {
                 output -> rightDrivePIDOutput = output);
 
         // Limit the PID output range to valid motor control values
-        leftDrivePIDController.setOutputRange(-1 * drivePower, drivePower);
-        rightDrivePIDController.setOutputRange(-1 * drivePower, drivePower);
+        leftDrivePIDController.setOutputRange(-1 * speed, speed);
+        rightDrivePIDController.setOutputRange(-1 * speed, speed);
 
         // Set the distance to travel in inches, left is negative
         leftDrivePIDController.setSetpoint(12 * distanceInFeet);
@@ -90,7 +91,7 @@ public class AssistedDrive extends Command {
         gyroPID.enable();
 
         // Debugging output very helpful. DS needs a console setting change to see it.
-       System.out.println("Assisted Drive Leg - " + distanceInFeet + "ft at power " + drivePower
+       System.out.println("Assisted Drive Leg - " + distanceInFeet + "ft at power " + speed
         + " bearing " + relativeBearing + " rel deg " + absBearing);
 
     }

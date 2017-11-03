@@ -36,6 +36,28 @@ public class PegUtil {
     public double angleToPeg;
 
     /**
+     * True if the vision values make sense
+     */
+    private boolean isReasonable;
+
+    //Getters
+    public double getDistanceToPeg() {
+        return distanceToPeg;
+    }
+
+    public double getAngleToPeg() {
+        return angleToPeg;
+    }
+
+    public boolean isReasonable() {
+        return isReasonable;
+    }
+
+    private void setReasonable(boolean reasonable) {
+        isReasonable = reasonable;
+    }
+
+    /**
      * Create arrays that work with NetworkTables
      * Calculate and Store angle and distance data
      * @param contours
@@ -69,13 +91,17 @@ public class PegUtil {
 
         //Store distance and angle values
         this.distanceToPeg = this.findDistanceToPeg();
+        System.out.println(distanceToPeg);
         this.angleToPeg = this.findAngleToPeg();
+        System.out.println(angleToPeg);
+
+        this.isReasonable = this.distanceToPeg != Double.MIN_VALUE && this.angleToPeg != Double.MIN_VALUE;
     }
 
     /**
      * gets the distance to the gear target based on the area, the formula takes area to the -0.467th power and multiplies
      * it by 1587.3
-     * Forumla was found with some statistical analyzes in the from of a power regression
+     * Formula was found with some statistical analyzes in the from of a power regression
      * @param area
      * @return
      */
@@ -89,7 +115,7 @@ public class PegUtil {
      * takes average and runs through getDistanceBasedOnArea function, returns value
      * @return -1 which indicates an error
      */
-    public double findDistanceToPeg() {
+    private double findDistanceToPeg() {
         // Is there 0, 1, 2, or more valid contours...
         // 0 == bail, >2 == bail
         // 1 = return the one
@@ -100,7 +126,7 @@ public class PegUtil {
         } else if(areas.size() == 2) {
             return getDistanceBasedOnArea((areas.get(0) + areas.get(1)) / 2);
         } else {
-            return -1;
+            return Double.MIN_VALUE;
         }
     }
 
@@ -111,11 +137,15 @@ public class PegUtil {
      * @param centerX
      * @return
      */
-    public double getAngleBasedOnCenterX(double centerX) {
+    private double getAngleBasedOnCenterX(double centerX) {
         double centerOfView = camera.horizontalQuality / 2;
         double distanceFromCenterOfView = centerX - centerOfView;
 
-        return camera.horizontalDegreesPerPixel * distanceFromCenterOfView;
+        double angle = camera.horizontalDegreesPerPixel * distanceFromCenterOfView;
+        double b = Math.sin(angle * Math.PI / 180) * getDistanceToPeg() - camera.displacementX;
+        double a = Math.cos(angle * Math.PI / 180) * getDistanceToPeg() - camera.displacementY;
+
+        return Math.atan(b / a) * 180 / Math.PI;
     }
 
     /**
@@ -139,8 +169,8 @@ public class PegUtil {
      * @param tolerance
      * @return
      */
-    private boolean isCenteredOnGear(double tolerance) {
-        return (Math.abs(findAngleToPeg()) < tolerance);
+    public boolean isCenteredOnGear(double tolerance) {
+        return (Math.abs(getAngleToPeg()) < tolerance);
     }
 
    /**
@@ -206,5 +236,19 @@ public class PegUtil {
      */
     public ArrayList<Double> getHeights() {
         return heights;
+    }
+
+    public static PegUtil getEmptyData() {
+        PegUtil ret = new PegUtil(null, null);
+        ret.setReasonable(false);
+        return ret;
+    }
+
+    private static boolean isTrash;
+    public void setIsTrash(boolean trash) {
+        isTrash = trash;
+    }
+    public boolean getIsTrash() {
+        return isTrash;
     }
 }

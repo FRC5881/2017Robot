@@ -8,7 +8,7 @@ import com.ctre.CANTalon;
  */
 public class PhysicsUtil {
     /**
-     * gravitation force (earth)
+     * gravitation acceleration (earth)
      */
     private static double g = 9.807;
 

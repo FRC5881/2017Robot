@@ -2,15 +2,17 @@ package org.techvalleyhigh.frc5881.steamworks.robot.commands;
 
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.vision.PegUtil;
-import org.techvalleyhigh.frc5881.steamworks.robot.utils.TrigUtil;
 
 /**
  * Created by ksharpe on 2/2/2017.
  */
 //TODO: Organize this mess better
 public class AutonomousCommand extends CommandGroup {
+    /**
+     * Auto speed
+     */
+    private static double speed = 0.5;
+
     private String routine;
     public AutonomousCommand(String Autoroutine) {
         routine = Autoroutine;
@@ -22,16 +24,22 @@ public class AutonomousCommand extends CommandGroup {
         if (routine != "null") {
             if(routine == "Baseline") {
                 // Crosses Baseline (10 feet just to be safe)
-                addSequential(new AssistedDrive(10, 0));
+                addSequential(new AssistedDrive(10, 0, speed));
 
             } else if (routine == "Left Peg") {
                 //While we don't see the
+                addSequential(new AssistedDrive(7.5, 0, 0.5));
+                addSequential(new AssistedDrive(0, 150, 0.5));
+
             } else if (routine == "Right Peg") {
-
-            } else if (routine == "Testing") {
-                //Test arc pathing
-                addSequential(new ArcPathing(36, 36, 0.65));
-
+                addSequential(new AssistedDrive(7.5,0,0.5));
+                System.out.println("Done Going Straight");
+                addSequential(new AssistedDrive(0, -150,0.25));
+                System.out.println("Done turning");
+                addSequential(new ScorePeg());
+                System.out.println("Scored Peg");
+            } else if (routine == "Test") {
+                addSequential(new ScorePeg());
             }
         }
     }
@@ -39,9 +47,5 @@ public class AutonomousCommand extends CommandGroup {
     @Override
     protected boolean isFinished() {
         return false;
-    }
-
-    private void scoreGear(boolean turnLeft) {
-
     }
 }

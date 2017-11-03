@@ -4,8 +4,6 @@ package org.techvalleyhigh.frc5881.steamworks.robot.utils;
  * Created by Cmahoney on 2/11/2017.
  */
 public class TrigUtil {
-
-
     public static double getHypotenuseFromSides(double a, double b) {
 
         return Math.sqrt(a * a + b * b);
@@ -77,6 +75,5 @@ public class TrigUtil {
         double vectorX = cDeltaX - cameraDisplacementX;
         double vectorY = cDeltaY - cameraDisplacementY - deadZone;
         return Math.atan(vectorY / vectorX); //Angle to turn
-
     }
 }
