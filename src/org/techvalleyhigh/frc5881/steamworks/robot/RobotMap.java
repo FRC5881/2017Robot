@@ -91,14 +91,14 @@ public class RobotMap {
 
         // Drive encoders
         driveControlLeftEncoder = new Encoder(0, 1);
-        driveControlLeftEncoder.setDistancePerPulse((18.84954d / 1440d)*4); // adjust factor
+        driveControlLeftEncoder.setDistancePerPulse(0.054541492d); // adjust factor
         driveControlLeftEncoder.setReverseDirection(true);
         LiveWindow.addSensor("Drive Control", "Left Drive Encoder", driveControlLeftEncoder);
 
         driveControlRightEncoder = new Encoder(2, 3);
         //pulse per rotation = 1440, Circumference = 18.84954
         //driveControlRightEncoder.setReverseDirection(true);
-        driveControlRightEncoder.setDistancePerPulse((18.84954d / 1440d)*4);
+        driveControlRightEncoder.setDistancePerPulse(0.054541492d); // (0.052359833d);    // Was: ((18.84954d / 1440d)*4);
         driveControlRightEncoder.setReverseDirection(false);
         LiveWindow.addSensor("Drive Control", "Right Drive Encoder", driveControlRightEncoder);
 

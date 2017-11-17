@@ -6,12 +6,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * Created by ksharpe on 2/2/2017.
  */
-//TODO: Organize this mess better
+
 public class AutonomousCommand extends CommandGroup {
     /**
-     * Auto speed
+     * Auto speed drive speed
      */
-    private static double speed = 0.5;
+    private static double driveSpeed = 0.5;
+    private static double turnSpeed = 0.25;
 
     private String routine;
     public AutonomousCommand(String Autoroutine) {
@@ -24,23 +25,29 @@ public class AutonomousCommand extends CommandGroup {
         if (routine != "null") {
             if(routine == "Baseline") {
                 // Crosses Baseline (10 feet just to be safe)
-                addSequential(new AssistedDrive(10, 0, speed));
-
-            } else if (routine == "Left Peg") {
-                //While we don't see the
-                addSequential(new AssistedDrive(7.5, 0, 0.5));
-                addSequential(new AssistedDrive(0, 150, 0.5));
-
-            } else if (routine == "Right Peg") {
-                addSequential(new AssistedDrive(7.5,0,0.5));
-                System.out.println("Done Going Straight");
-                addSequential(new AssistedDrive(0, -150,0.25));
-                System.out.println("Done turning");
-                addSequential(new ScorePeg());
-                System.out.println("Scored Peg");
-            } else if (routine == "Test") {
-                addSequential(new ScorePeg());
+                addSequential(new AssistedDrive(10, 0, driveSpeed));
             }
+            /* else if (routine == "Blue Left") {
+                addSequential(new AssistedDrive(1, 0, driveSpeed));
+                addSequential(new AssistedDrive(0, 65, turnSpeed));
+                addSequential(new AssistedDrive(109d/12d, 0, driveSpeed));
+                addSequential(new AssistedDrive(0,-90, turnSpeed));
+                addSequential(new AssistedDrive(10, 0, driveSpeed));
+            } else if(routine == "Blue Right") {
+                addSequential(new AssistedDrive(7.5, 0, driveSpeed));
+                addSequential(new AssistedDrive(0, 60, turnSpeed));
+                addSequential(new AssistedDrive(10,0, driveSpeed));
+            } else if(routine == "Red Left") {
+                addSequential(new AssistedDrive(9, 0, driveSpeed));
+                addSequential(new AssistedDrive(0, -60, turnSpeed));
+                addSequential(new AssistedDrive(10,0, driveSpeed));
+            } else if(routine == "Red Right") {
+                addSequential(new AssistedDrive(1, 0, driveSpeed));
+                addSequential(new AssistedDrive(0, -65, turnSpeed));
+                addSequential(new AssistedDrive(109d/12d, 0, driveSpeed));
+                addSequential(new AssistedDrive(0,90, turnSpeed));
+                addSequential(new AssistedDrive(10, 0, driveSpeed));
+            }*/
         }
     }
 

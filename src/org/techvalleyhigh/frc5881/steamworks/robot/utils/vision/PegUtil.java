@@ -1,7 +1,6 @@
 package org.techvalleyhigh.frc5881.steamworks.robot.utils.vision;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.techvalleyhigh.frc5881.steamworks.robot.subsystems.Vision;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,8 +31,8 @@ public class PegUtil {
     private VisionCamera camera;
 
     //Distance and angle data
-    public double distanceToPeg;
-    public double angleToPeg;
+    private double distanceToPeg;
+    private double angleToPeg;
 
     /**
      * True if the vision values make sense
@@ -55,6 +54,14 @@ public class PegUtil {
 
     private void setReasonable(boolean reasonable) {
         isReasonable = reasonable;
+    }
+
+    private static boolean isUsable = true;
+    public void setIsUsable(boolean usable) {
+        isUsable = usable;
+    }
+    public boolean getIsUsable() {
+        return isUsable;
     }
 
     /**
@@ -91,11 +98,10 @@ public class PegUtil {
 
         //Store distance and angle values
         this.distanceToPeg = this.findDistanceToPeg();
-        System.out.println(distanceToPeg);
         this.angleToPeg = this.findAngleToPeg();
-        System.out.println(angleToPeg);
 
         this.isReasonable = this.distanceToPeg != Double.MIN_VALUE && this.angleToPeg != Double.MIN_VALUE;
+        System.out.println("Distance " + distanceToPeg + " Angle " + angleToPeg + " Is Reasonable " + isReasonable);
     }
 
     /**
@@ -187,7 +193,7 @@ public class PegUtil {
             // Do math - does ratio of w/h match expected w/in margin of error
             // Ratio of tested values has a range of 0.43 < x < 0.45
             // (Room for error)
-            if (!(width / height >= 0.41 && width / height <= 0.47)) {
+            if (!(width / height >= 0.43 && width / height <= 0.45)) {
                 // Remove from each array
                 widths.remove(i);
                 heights.remove(i);
@@ -196,6 +202,7 @@ public class PegUtil {
                 areas.remove(i);
             }
         }
+        System.out.println("Counters " + heights.size());
     }
 
     /**
@@ -242,13 +249,5 @@ public class PegUtil {
         PegUtil ret = new PegUtil(null, null);
         ret.setReasonable(false);
         return ret;
-    }
-
-    private static boolean isTrash;
-    public void setIsTrash(boolean trash) {
-        isTrash = trash;
-    }
-    public boolean getIsTrash() {
-        return isTrash;
     }
 }

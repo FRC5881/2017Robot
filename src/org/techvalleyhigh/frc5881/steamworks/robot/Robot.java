@@ -63,18 +63,11 @@ public class Robot extends IterativeRobot {
 
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Do Nothing", new AutonomousCommand("null"));
-        autoChooser.addObject("Score Peg", new AutonomousCommand("Right Peg"));
-        autoChooser.addObject("Test", new AutonomousCommand("Test"));
+        autoChooser.addObject("Blue TURN Left", new AutonomousCommand("Blue Left"));
+        autoChooser.addObject("Blue TURN Right", new AutonomousCommand("Blue Right"));
+        autoChooser.addObject("Red TURN Left" , new AutonomousCommand("Red Left"));
+        autoChooser.addObject("Red TURN Right", new AutonomousCommand("Red Right"));
         autoChooser.addObject("Baseline", new AutonomousCommand("Baseline"));
-
-        /**
-        autoChooser.addObject("Testing 6 6", new AutonomousCommand("Testing 6 6"));
-
-        for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 5; j++) {
-                autoChooser.addObject("Testing " + i + " " + j, "Testing " + i + " " + j);
-            }
-        }**/
 
         SmartDashboard.putData("Autonomous Mode Selection", autoChooser);
 

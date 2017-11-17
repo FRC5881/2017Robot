@@ -25,15 +25,14 @@ public class ScorePeg extends Command {
 
     ScorePeg() {
         requires(Robot.vision);
-        initialize();
-
         requires(Robot.driveControl);
         driveControl = Robot.driveControl;
+        initialize();
     }
 
     protected void initialize() {
         lastSnapShot = Robot.vision.takePegSnapShot();
-        lastSnapShot.setIsTrash(true);
+        lastSnapShot.setIsUsable(true);
 
         RobotMap.driveControlLeftEncoder.reset();
         RobotMap.driveControlRightEncoder.reset();
@@ -70,8 +69,9 @@ public class ScorePeg extends Command {
 
     protected void execute() {
         PegUtil snapShot = Robot.vision.takePegSnapShot();
+        System.out.println("Taking Snap Shot");
         if(!hasTurned) {
-            if ((snapShot.isReasonable() && (!lastSnapShot.isReasonable() || lastSnapShot.getAngleToPeg() != snapShot.getAngleToPeg())) || lastSnapShot.getIsTrash()) {
+            if ((snapShot.isReasonable() && (!lastSnapShot.isReasonable() || lastSnapShot.getAngleToPeg() != snapShot.getAngleToPeg())) || lastSnapShot.getIsUsable()) {
                 gyroPID.setSetpoint(driveControl.getGyroAngle() + snapShot.getAngleToPeg());
                 lastSnapShot = snapShot;
             } else {
@@ -92,6 +92,7 @@ public class ScorePeg extends Command {
     }
 
     protected boolean isFinished() {
+        //System.out.println("Is Finished");
         return hasTurned && rightDrivePIDController.onTarget() && leftDrivePIDController.onTarget();
     }
 
