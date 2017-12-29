@@ -13,7 +13,7 @@ import com.ctre.CANTalon.*;
 import org.techvalleyhigh.frc5881.steamworks.robot.RobotMap;
 
 /**
- * Created by CMahoney on 2/4/2017.
+ * Created by CMahoney on 2/4/2017. Edited (Shamelessly stolen) by JDushane on 12/20/17 for the shooter task.
  */
 
 public class Shooter extends Subsystem {
@@ -47,7 +47,7 @@ public class Shooter extends Subsystem {
     /**
      * Initialize shooter SmartDashboard values
      */
-    /*
+
     private void initSmartDashboard() {
         SmartDashboard.putNumber(MAX_SHOOTER_DISTANCE, 10);
         SmartDashboard.putNumber(MIN_SHOOTER_DISTANCE, 10);
@@ -59,14 +59,14 @@ public class Shooter extends Subsystem {
     // TODO: Velocity PID
 
 
-     * Given a distance and angle difference outputs true or false on wether
+    /* * Given a distance and angle difference outputs true or false on wether
      * or not the robot is "clear" to shoot based on min and max distance and
      * angle tolerance
      * @param distance Horizontal gistance to goal
      * @param angleDifference Absolute angle difference to the goal
      * @return true or false
-     */
-    /*
+
+*/
     public boolean readyToShootPosition(double distance, double angleDifference) {
        return    (distance < SmartDashboard.getNumber(MAX_SHOOTER_DISTANCE, 10)
                && distance > SmartDashboard.getNumber(MIN_SHOOTER_DISTANCE, 10)
@@ -92,16 +92,15 @@ public class Shooter extends Subsystem {
      * @return
      */
 
-    /*
+
     public double rpmToScore(double distance) {
 
     }
-     */
 
     /**
      * Spins the motors to score
      */
-    /*
+
     public void spinToScore() {
         //Call vision to find distance and angle difference
         //Call rpmToScore to rpm required
@@ -114,7 +113,6 @@ public class Shooter extends Subsystem {
         double rpmToScore;
         double value;
 
-        /*
         if(readyToShootPosition(distance, angle)) {
 
             if(shooterBottomTalon.get() > 0) {
@@ -127,9 +125,9 @@ public class Shooter extends Subsystem {
         } else {
            //Call Assisted Drive To Line Up Shot
         }
-        */
 
-        /*if(RobotMap.shooterBottomTalon.get() > 0) {
+
+        if(RobotMap.shooterBottomTalon.get() > 0) {
             RobotMap.shooterTopTalon.set(3000);
         } else {
             RobotMap.shooterBottomTalon.set(3000);
@@ -139,7 +137,7 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("TopShooterSpeed", RobotMap.shooterTopTalon.getSpeed());
         SmartDashboard.putNumber("BottomShooterVoltage", RobotMap.shooterBottomTalon.getOutputVoltage()/RobotMap.shooterBottomTalon.getBusVoltage());
         SmartDashboard.putNumber("BottomShooterSpeed", RobotMap.shooterBottomTalon.getSpeed());
-    */
+
         
     @Override
     protected void initDefaultCommand() {
